@@ -1,0 +1,1 @@
+Desarrollar un sistema integral de gestión de requerimientos (RMS) mediante una arquitectura centralizada y protocolos de trazabilidad digital, con el fin de eliminar la fragmentación de la información y garantizar la integridad en la toma de decisiones estratégicas de la gerencia en Nexa Servicios.
