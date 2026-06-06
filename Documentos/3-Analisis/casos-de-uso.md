@@ -1,8 +1,8 @@
 Campo | Descripción
 --------|-------------
 ID CU | CU-01
-Nombre del Caso de Uso | Registrar Solicitud Formal
-Módulo | Radicación y Gestión de Solicitudes
+Nombre del Caso de Uso | Registrar Solicitud Formal.
+Módulo | Radicación y Gestión de Solicitudes.
 Propósito | Permitir al empleado crear y enviar una petición formal llenando los campos necesarios y adjuntando soportes si es requerido.
 Asociado a | ACT-01, ACT-05 / RF-01, RF-02, RF-03, RF-04, RF-11, RF-21, RF-22 / RN-01
 
