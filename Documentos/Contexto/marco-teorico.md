@@ -28,8 +28,11 @@ La crisis de Nexa Servicios no es una falta de trabajo, sino una falla de arquit
 • De los Archivos Locales a la Integridad Centralizada: El reemplazo de los Excel "final_final" por un sistema de gestión permite aplicar reglas de negocio y restricciones de integridad (Foreign Keys, Triggers), asegurando que la información sea consistente para todos los actores en tiempo real.
 ________________________________________
 Bibliografía de Respaldo (2021-2026)
-•	IEEE Computer Society (2024). Guide to the Software Engineering Body of Knowledge (SWEBOK V4.0).
-•	Stair, R., & Reynolds, G. (2022). Principles of Information Systems. Cengage Learning. (Conceptos de Integridad y Sistemas de Información).
-•	Sommerville, I. (2021). Software Engineering. 10th Edition (Global Edition). Pearson. (Modelos de gestión de requisitos).
-•	ISO/IEC (2022). Information technology — Systems and software quality requirements and evaluation (SQuaRE). Standard 25010.
+IEEE Computer Society (2024). Guide to the Software Engineering Body of Knowledge (SWEBOK V4.0).
+
+Stair, R., & Reynolds, G. (2022). Principles of Information Systems. Cengage Learning. (Conceptos de Integridad y Sistemas de Información).
+
+Sommerville, I. (2021). Software Engineering. 10th Edition (Global Edition). Pearson. (Modelos de gestión de requisitos).
+
+ISO/IEC (2022). Information technology — Systems and software quality requirements and evaluation (SQuaRE). Standard 25010.
 
