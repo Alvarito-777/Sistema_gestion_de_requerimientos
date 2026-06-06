@@ -21,4 +21,4 @@ El gran día del caos:
 	5. Nadie puede demostrar nada. 
 	
 No hay evidencia, no hay historial, no hay responsables claros, la gerencia convoca una reunión, dicha reunión produce un acta y está se pierde 
-Ustedes serán contratados simbólicamente como analistas junior, su trabajo es definir el proyecto de forma clara y precisa, cada pareja debe proponer y documentar un servicio"
+Ustedes serán contratados simbólicamente como analistas junior, su trabajo es definir el proyecto de forma clara y precisa, cada pareja debe proponer y documentar un servicio".
