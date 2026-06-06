@@ -1,4 +1,5 @@
 Campo | Descripción
+|--------|--------|
 ID | RF 01
 HU Relacionada | HU 01 (Registro Formal de Solicitudes)
 Descripción | El sistema debe presentar un formulario digital de solicitud con los campos título, descripción, tipo de solicitud y nivel de urgencia.
