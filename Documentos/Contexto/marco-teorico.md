@@ -22,7 +22,9 @@ El sustento técnico de este proyecto se divide en la comprensión de la informa
 La crisis de Nexa Servicios no es una falta de trabajo, sino una falla de arquitectura de procesos. La relación se establece de la siguiente forma:
 
 • De la Informalidad a la Trazabilidad: Al aplicar la definición de trazabilidad, se elimina la libreta de Oscar y los chats de Diana. Cada solicitud recibe un Identificador Único (UUID) que vincula la aprobación de palabra con un registro digital inmutable.
+
 • Del Caos al Workflow: El problema de "quién autorizó esto" se resuelve implementando un Modelo de Estados. Una solicitud no puede ser ejecutada por Camilo si su estado en la base de datos no es Aprobado_Gerencia. Esto fuerza a la organización a seguir un flujo lógico, eliminando la ambigüedad operativa.
+
 • De los Archivos Locales a la Integridad Centralizada: El reemplazo de los Excel "final_final" por un sistema de gestión permite aplicar reglas de negocio y restricciones de integridad (Foreign Keys, Triggers), asegurando que la información sea consistente para todos los actores en tiempo real.
 ________________________________________
 Bibliografía de Respaldo (2021-2026)
