@@ -1,263 +1,265 @@
-## RF 01 – Registro Formal de Solicitudes
-**HU Relacionada:** HU 01  
-**Descripción:** El sistema debe presentar un formulario digital de solicitud con los campos título, descripción, tipo de solicitud y nivel de urgencia.
+Campo | Descripción
+ID | RF 01
+HU Relacionada | HU 01 (Registro Formal de Solicitudes)
+Descripción | El sistema debe presentar un formulario digital de solicitud con los campos título, descripción, tipo de solicitud y nivel de urgencia.
+
+Campo | Descripción
+ID | RF 02
+HU Relacionada | HU 01 (Registro Formal de Solicitudes)
+Descripción | El sistema debe asignar automáticamente un número de radicado único con formato NEXA AAAA ##### a cada solicitud enviada exitosamente.
+
+Campo | Descripción
+ID | RF 03
+HU Relacionada | HU 03 (Historial de Solicitudes Inmutables)
+Descripción | El sistema debe bloquear cualquier opción para borrar o modificar solicitudes en estado Aprobada, Rechazada o Cerrada, y registrar usuario, fecha, hora y cambios realizados.
+
+Campo | Descripción
+ID | RF 04
+HU Relacionada | HU 04 (Priorización de Solicitudes)
+Descripción | El sistema debe ordenar las solicitudes por urgencia y luego por marca temporal. Gerencia podrá modificar la urgencia con justificación registrada en el log.
+
+Campo | Descripción
+ID | RF 05
+HU Relacionada | HU 02 (Notificaciones Automáticas)
+Descripción | El sistema debe enviar un correo electrónico automático al solicitante cada vez que el estado de su solicitud sea modificado en un plazo no mayor a 1 minuto.
+
+Campo | Descripción
+ID | RF 06
+HU Relacionada | HU 02 (Notificaciones Automáticas)
+Descripción | El sistema debe disparar una notificación in app en la campana de alertas del usuario al cambiar el estado de su solicitud.
+
+Campo | Descripción
+ID | RF 07
+HU Relacionada | HU 04 (Priorización de Solicitudes)
+Descripción | El sistema debe resaltar visualmente en la bandeja de Gerencia las solicitudes con urgencia crítica mediante color distintivo y posición preferente.
+
+Campo | Descripción
+ID | RF 08
+HU Relacionada | HU 22 (Recuperación de contraseña)
+Descripción | El sistema debe proveer una opción de "Recuperar Contraseña" en la interfaz de inicio de sesión.
+
+Campo | Descripción
+ID | RF 09
+HU Relacionada | HU 11 (Privacidad de Solicitudes por Usuario)
+Descripción | El sistema debe restringir la visibilidad según rol y registrar en el log cada acceso administrativo a solicitudes ajenas.
+
+Campo | Descripción
+ID | RF 10
+HU Relacionada | HU 05 (Edición de Solicitudes Pendientes)
+Descripción | El sistema debe permitir al solicitante editar su solicitud únicamente mientras esté en estado Pendiente.
+
+Campo | Descripción
+ID | RF 11
+HU Relacionada | HU 05 (Edición de Solicitudes Pendientes)
+Descripción | El sistema debe conservar la versión original y generar versiones correlativas (v1, v2, v3) visibles en el historial.
+
+Campo | Descripción
+ID | RF 12
+HU Relacionada | HU 05 (Edición de Solicitudes Pendientes)
+Descripción | El sistema debe notificar automáticamente a Gerencia cuando una solicitud en cola sea modificada.
+
+Campo | Descripción
+ID | RF 13
+HU Relacionada | HU 06 (Notificación de Resoluciones Críticas)
+Descripción | El sistema debe enviar notificaciones de alta prioridad cuando Gerencia apruebe solicitudes críticas.
+
+Campo | Descripción
+ID | RF 14
+HU Relacionada | HU 06 (Notificación de Resoluciones Críticas)
+Descripción | El sistema debe forzar la visualización de un mensaje emergente con acuse de lectura.
+
+Campo | Descripción
+ID | RF 15
+HU Relacionada | HU 06 (Notificación de Resoluciones Críticas)
+Descripción | El sistema debe registrar qué coordinadores acusaron recibido de cada resolución crítica.
+
+Campo | Descripción
+ID | RF 16
+HU Relacionada | HU 07 (Delegación de Autoridad en Contingencias)
+Descripción | El sistema debe permitir configurar delegado, fechas y categorías autorizadas.
+
+Campo | Descripción
+ID | RF 17
+HU Relacionada | HU 07 (Delegación de Autoridad en Contingencias)
+Descripción | El sistema debe restringir las acciones del delegado solo a categorías autorizadas.
+
+Campo | Descripción
+ID | RF 18
+HU Relacionada | HU 07 (Delegación de Autoridad en Contingencias)
+Descripción | El sistema debe enviar un resumen diario al Gerente con las decisiones del delegado.
+
+Campo | Descripción
+ID | RF 19
+HU Relacionada | HU 08 (Gestión de Evidencia Digital)
+Descripción | El sistema debe generar un comprobante PDF con radicado, solicitante, aprobador, fechas, estado y firmas digitales.
+
+Campo | Descripción
+ID | RF 20
+HU Relacionada | HU 08 (Gestión de Evidencia Digital)
+Descripción | El sistema debe incluir un código QR en el PDF que redirija a una URL pública de validación.
+
+Campo | Descripción
+ID | RF 21
+HU Relacionada | HU 08 (Gestión de Evidencia Digital)
+Descripción | El sistema debe enviar automáticamente el comprobante PDF al solicitante al cerrar la solicitud.
+
+Campo | Descripción
+ID | RF 22
+HU Relacionada | HU 09 (Seguimiento Visual de Estados)
+Descripción | El sistema debe mostrar un tablero con semáforo: rojo, amarillo y verde.
+
+Campo | Descripción
+ID | RF 23
+HU Relacionada | HU 09 (Seguimiento Visual de Estados)
+Descripción | El sistema debe mostrar un ícono de alerta en solicitudes sin gestión por más de 3 días hábiles.
+
+Campo | Descripción
+ID | RF 24
+HU Relacionada | HU 10 (Validación de Datos Obligatorios)
+Descripción | El sistema debe validar en tiempo real que todos los campos obligatorios estén completos.
+
+Campo | Descripción
+ID | RF 25
+HU Relacionada | HU 10 (Validación de Datos Obligatorios)
+Descripción | El sistema debe impedir caracteres inválidos como <, >, {, }.
+
+Campo | Descripción
+ID | RF 26
+HU Relacionada | HU 10 (Validación de Datos Obligatorios)
+Descripción | El sistema debe validar coherencia lógica de fechas.
+
+Campo | Descripción
+ID | RF 27
+HU Relacionada | HU 11 (Privacidad de Solicitudes por Usuario)
+Descripción | El sistema debe ocultar el nombre del solicitante en solicitudes tipo Queja Anónima.
+
+Campo | Descripción
+ID | RF 28
+HU Relacionada | HU 12 (Comentario de Rechazo o Ajuste)
+Descripción | El sistema debe exigir comentario mínimo de 50 caracteres al rechazar.
+
+Campo | Descripción
+ID | RF 29
+HU Relacionada | HU 12 (Comentario de Rechazo o Ajuste)
+Descripción | El sistema debe permitir adjuntar un documento guía al rechazar.
+
+Campo | Descripción
+ID | RF 30
+HU Relacionada | HU 12 (Comentario de Rechazo o Ajuste)
+Descripción | El sistema debe habilitar un botón de Apelación para el solicitante.
+
+Campo | Descripción
+ID | RF 31
+HU Relacionada | HU 13 (Filtro de Solicitudes por Área)
+Descripción | El sistema debe permitir filtrar solicitudes por departamentos.
+
+Campo | Descripción
+ID | RF 32
+HU Relacionada | HU 13 (Filtro de Solicitudes por Área)
+Descripción | El sistema debe permitir guardar filtros favoritos.
+
+Campo | Descripción
+ID | RF 33
+HU Relacionada | HU 13 (Filtro de Solicitudes por Área)
+Descripción | El sistema debe permitir exportar datos filtrados a CSV o XLSX.
+
+Campo | Descripción
+ID | RF 34
+HU Relacionada | HU 14 (Confirmación de Lectura)
+Descripción | Registrar fecha y hora exactas en que Gerencia abre una solicitud.
+
+Campo | Descripción
+ID | RF 35
+HU Relacionada | HU 14 (Confirmación de Lectura)
+Descripción | Cambiar ícono de Nuevo a Visto al abrir la solicitud.
+
+Campo | Descripción
+ID | RF 36
+HU Relacionada | HU 14 (Confirmación de Lectura)
+Descripción | Notificar al solicitante cuando Gerencia visualice su solicitud.
+
+Campo | Descripción
+ID | RF 37
+HU Relacionada | HU 14 (Escalamiento por Inactividad)
+Descripción | Marcar como Gestión en Retraso si no se abre en 24 horas hábiles.
+
+Campo | Descripción
+ID | RF 38
+HU Relacionada | HU 15 (Cierre con Confirmación)
+Descripción | Requerir confirmación explícita del solicitante para cerrar.
+
+Campo | Descripción
+ID | RF 39
+HU Relacionada | HU 15 (Cierre con Confirmación)
+Descripción | Permitir calificar la atención con 1 a 5 estrellas.
+
+Campo | Descripción
+ID | RF 40
+HU Relacionada | HU 15 (Cierre con Confirmación)
+Descripción | Habilitar campo de observaciones finales.
+
+Campo | Descripción
+ID | RF 41
+HU Relacionada | HU 16 (Alerta de Solicitudes Estancadas)
+Descripción | Notificar al Gerente cuando una solicitud urgente lleve más de 3 días sin atención.
+
+Campo | Descripción
+ID | RF 42
+HU Relacionada | HU 16 (Alerta de Solicitudes Estancadas)
+Descripción | Mostrar semáforo de solicitudes estancadas.
+
+Campo | Descripción
+ID | RF 43
+HU Relacionada | HU 16 (Alerta de Solicitudes Estancadas)
+Descripción | Enviar reporte semanal de cuellos de botella cada lunes a las 8 a.m.
+
+Campo | Descripción
+ID | RF 44
+HU Relacionada | HU 22 (Recuperación de Contraseña)
+Descripción | Enviar enlace de restablecimiento con vigencia de 15 minutos.
+
+Campo | Descripción
+ID | RF 45
+HU Relacionada | HU 17 (Autenticación de Usuarios)
+Descripción | Validar usuario y contraseña corporativa.
+
+Campo | Descripción
+ID | RF 46
+HU Relacionada | HU 17 (Autenticación de Usuarios)
+Descripción | Bloquear cuenta por 15 minutos tras 3 intentos fallidos.
+
+Campo | Descripción
+ID | RF 47
+HU Relacionada | HU 17 (Autenticación de Usuarios)
+Descripción | Expirar sesión tras 20 minutos sin actividad.
+
+Campo | Descripción
+ID | RF 48
+HU Relacionada | HU 17 (Autenticación de Usuarios)
+Descripción | Redirigir al usuario según su rol al iniciar sesión.
+
+Campo | Descripción
+ID | RF 49
+HU Relacionada | HU 17 (Autenticación de Usuarios)
+Descripción | Restringir acceso a menús y botones según permisos.
+
+Campo | Descripción
+ID | RF 50
+HU Relacionada | HU 18 (Búsqueda de Solicitudes)
+Descripción | Incluir barra de búsqueda avanzada por palabra clave, radicado, fecha o estado.
+
+Campo | Descripción
+ID | RF 51
+HU Relacionada | HU 19 (Dashboard Principal)
+Descripción | Mostrar panel gráfico con métricas en tiempo real.
+
+Campo | Descripción
+ID | RF 52
+HU Relacionada | HU 20 (Consulta del Log de Auditoría)
+Descripción | Permitir solo al Administrador ver el log técnico con fecha, hora, IP y acción.
+
+Campo | Descripción
+ID | RF 53
+HU Relacionada | HU 21 (Proceso de Cierre Automático)
+Descripción | El sistema debe cerrar automáticamente y calificar con 3 estrellas los casos que cumplan 5 días hábiles sin confirmación del empleado.
 
-
-## RF 02 – Asignación Automática de Radicado
-**HU Relacionada:** HU 01  
-**Descripción:** El sistema debe asignar automáticamente un número de radicado único con formato NEXA AAAA ##### a cada solicitud enviada exitosamente.
-
-
-## RF 03 – Inmutabilidad del Historial
-**HU Relacionada:** HU 03  
-**Descripción:** El sistema debe bloquear cualquier opción para borrar o modificar solicitudes en estado Aprobada, Rechazada o Cerrada, y registrar usuario, fecha, hora y cambios realizados.
-
-
-## RF 04 – Priorización de Solicitudes
-**HU Relacionada:** HU 04  
-**Descripción:** Ordenar solicitudes por urgencia y luego por marca temporal. Gerencia puede modificar urgencia con justificación registrada en el log.
-
-
-## RF 05 – Notificación por Correo
-**HU Relacionada:** HU 02  
-**Descripción:** Enviar correo automático al solicitante cada vez que el estado cambie, en menos de 1 minuto.
-
-
-## RF 06 – Notificación In‑App
-**HU Relacionada:** HU 02  
-**Descripción:** Disparar notificación en la campana de alertas cuando el estado cambie.
-
-
-## RF 07 – Resaltado de Urgencias Críticas
-**HU Relacionada:** HU 04  
-**Descripción:** Resaltar visualmente solicitudes críticas en la bandeja de Gerencia.
-
-
-## RF 08 – Recuperación de Contraseña
-**HU Relacionada:** HU 22  
-**Descripción:** Proveer opción de “Recuperar Contraseña” en el inicio de sesión.
-
-
-## RF 09 – Privacidad y Auditoría
-**HU Relacionada:** HU 11  
-**Descripción:** Restringir visibilidad según rol y registrar accesos administrativos en el log.
-
-
-## RF 10 – Edición de Solicitudes Pendientes
-**HU Relacionada:** HU 05  
-**Descripción:** Permitir edición solo mientras la solicitud esté en estado Pendiente.
-
-
-## RF 11 – Versionamiento de Solicitudes
-**HU Relacionada:** HU 05  
-**Descripción:** Conservar versión original y generar versiones v1, v2, v3 visibles en historial.
-
-
-## RF 12 – Notificación a Gerencia por Edición
-**HU Relacionada:** HU 05  
-**Descripción:** Notificar automáticamente a Gerencia cuando una solicitud en cola sea modificada.
-
-
-## RF 13 – Notificaciones Críticas a Coordinadores
-**HU Relacionada:** HU 06  
-**Descripción:** Enviar notificaciones de alta prioridad cuando Gerencia apruebe solicitudes críticas.
-
-
-## RF 14 – Mensaje Emergente de Resoluciones Críticas
-**HU Relacionada:** HU 06  
-**Descripción:** Forzar visualización de mensaje emergente con acuse de lectura.
-
-
-## RF 15 – Reporte de Lectura de Resoluciones
-**HU Relacionada:** HU 06  
-**Descripción:** Registrar qué coordinadores leyeron cada resolución crítica.
-
-
-## RF 16 – Configuración de Delegación
-**HU Relacionada:** HU 07  
-**Descripción:** Permitir configurar delegado, fechas y categorías autorizadas.
-
-
-## RF 17 – Restricción de Acciones del Delegado
-**HU Relacionada:** HU 07  
-**Descripción:** Limitar acciones del delegado solo a categorías autorizadas.
-
-
-## RF 18 – Resumen Diario al Gerente
-**HU Relacionada:** HU 07  
-**Descripción:** Enviar resumen diario con decisiones tomadas por el delegado.
-
-
-## RF 19 – Comprobante PDF de Solicitudes Finalizadas
-**HU Relacionada:** HU 08  
-**Descripción:** Generar PDF con radicado, solicitante, aprobador, fechas, estado y firmas digitales.
-
-
-## RF 20 – Código QR en Comprobante
-**HU Relacionada:** HU 08  
-**Descripción:** Incluir QR que redirija a URL pública de validación.
-
-
-## RF 21 – Envío Automático del Comprobante
-**HU Relacionada:** HU 08  
-**Descripción:** Enviar el PDF al correo del solicitante al cerrar la solicitud.
-
-
-## RF 22 – Tablero Visual del Solicitante
-**HU Relacionada:** HU 09  
-**Descripción:** Mostrar tablero con semáforo: rojo, amarillo, verde.
-
-
-## RF 23 – Alertas por Falta de Gestión
-**HU Relacionada:** HU 09  
-**Descripción:** Mostrar ícono de alerta en solicitudes sin gestión por más de 3 días hábiles.
-
-
-## RF 24 – Validación de Campos Obligatorios
-**HU Relacionada:** HU 10  
-**Descripción:** Validar en tiempo real que todos los campos obligatorios estén completos.
-
-
-## RF 25 – Máscaras de Entrada
-**HU Relacionada:** HU 10  
-**Descripción:** Impedir caracteres inválidos como <, >, {, }.
-
-
-## RF 26 – Validación de Fechas
-**HU Relacionada:** HU 10  
-**Descripción:** Validar coherencia lógica de fechas ingresadas.
-
-
-## RF 27 – Anonimato en Quejas
-**HU Relacionada:** HU 11  
-**Descripción:** Ocultar nombre del solicitante en solicitudes tipo Queja Anónima.
-
-
-## RF 28 – Comentario Obligatorio en Rechazo
-**HU Relacionada:** HU 12  
-**Descripción:** Exigir comentario mínimo de 50 caracteres al rechazar.
-
-
-## RF 29 – Adjuntar Guía en Rechazo
-**HU Relacionada:** HU 12  
-**Descripción:** Permitir adjuntar documento guía al rechazar.
-
-
-## RF 30 – Botón de Apelación
-**HU Relacionada:** HU 12  
-**Descripción:** Habilitar apelación textual tras un rechazo.
-
-
-## RF 31 – Filtro por Área
-**HU Relacionada:** HU 13  
-**Descripción:** Filtrar solicitudes por departamentos.
-
-
-## RF 32 – Filtros Favoritos
-**HU Relacionada:** HU 13  
-**Descripción:** Guardar combinaciones de filtros como favoritos.
-
-
-## RF 33 – Exportación de Datos
-**HU Relacionada:** HU 13  
-**Descripción:** Exportar datos filtrados a CSV o XLSX.
-
-
-## RF 34 – Registro de Primera Lectura
-**HU Relacionada:** HU 14  
-**Descripción:** Registrar fecha y hora exacta en que Gerencia abre una solicitud.
-
-
-## RF 35 – Cambio de Ícono a “Visto”
-**HU Relacionada:** HU 14  
-**Descripción:** Cambiar ícono de Nuevo a Visto al abrir la solicitud.
-
-
-## RF 36 – Notificación de Visualización
-**HU Relacionada:** HU 14  
-**Descripción:** Notificar al solicitante cuando Gerencia visualice su solicitud.
-
-
-## RF 37 – Escalamiento por Inactividad
-**HU Relacionada:** HU 14  
-**Descripción:** Marcar como Gestión en Retraso si no se abre en 24 horas hábiles.
-
-
-## RF 38 – Confirmación del Solicitante para Cierre
-**HU Relacionada:** HU 15  
-**Descripción:** Requerir confirmación explícita del solicitante para cerrar.
-
-
-## RF 39 – Calificación del Servicio
-**HU Relacionada:** HU 15  
-**Descripción:** Permitir calificar atención con 1 a 5 estrellas.
-
-
-## RF 40 – Observaciones Finales
-**HU Relacionada:** HU 15  
-**Descripción:** Habilitar campo de observaciones cuando indique que no fue resuelto.
-
-
-## RF 41 – Alerta por Solicitudes Urgentes Estancadas
-**HU Relacionada:** HU 16  
-**Descripción:** Notificar al Gerente cuando una solicitud urgente lleve más de 3 días sin atención.
-
-
-## RF 42 – Semáforo de Vencimiento
-**HU Relacionada:** HU 16  
-**Descripción:** Mostrar semáforo de solicitudes estancadas en tablero de Gerencia.
-
-
-## RF 43 – Reporte Semanal de Cuellos de Botella
-**HU Relacionada:** HU 16  
-**Descripción:** Enviar reporte semanal cada lunes a las 8 a.m.
-
-
-## RF 44 – Enlace de Restablecimiento de Contraseña
-**HU Relacionada:** HU 22  
-**Descripción:** Enviar enlace con vigencia de 15 minutos.
-
-
-## RF 45 – Validación de Credenciales
-**HU Relacionada:** HU 17  
-**Descripción:** Validar usuario y contraseña corporativa.
-
-
-## RF 46 – Bloqueo por Intentos Fallidos
-**HU Relacionada:** HU 17  
-**Descripción:** Bloquear cuenta por 15 minutos tras 3 intentos fallidos.
-
-
-## RF 47 – Expiración Automática de Sesión
-**HU Relacionada:** HU 17  
-**Descripción:** Cerrar sesión tras 20 minutos sin actividad.
-
-
-## RF 48 – Redirección por Rol
-**HU Relacionada:** HU 17  
-**Descripción:** Redirigir al usuario según su rol al iniciar sesión.
-
-
-## RF 49 – Restricción de Accesos
-**HU Relacionada:** HU 17  
-**Descripción:** Restringir acceso a menús y botones según permisos.
-
-
-## RF 50 – Búsqueda Avanzada
-**HU Relacionada:** HU 18  
-**Descripción:** Barra de búsqueda por palabra clave, radicado, fecha o estado.
-
-
-## RF 51 – Dashboard de Indicadores
-**HU Relacionada:** HU 19  
-**Descripción:** Panel gráfico con métricas en tiempo real.
-
-
-## RF 52 – Consulta del Log de Auditoría
-**HU Relacionada:** HU 20  
-**Descripción:** Solo el Administrador puede ver el log técnico.
-
-
-## RF 53 – Cierre Automático por Silencio Administrativo
-**HU Relacionada:** HU 21  
-**Descripción:** Cerrar automáticamente y calificar con 3 estrellas tras 5 días sin confirmación.
