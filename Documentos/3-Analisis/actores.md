@@ -1,4 +1,4 @@
-### 🧑‍💻 ACT-01 – Desarrollador de Software
+### ACT-01 – Desarrollador de Software
 | Campo | Descripción |
 |-------|-------------|
 | **ID** | ACT-01 |
@@ -7,7 +7,7 @@
 | **Permisos / Rol** | Solicitante |
 | **CU Relacionados** | • CU-01 (Registrar Solicitud) <br> • CU-02 (Gestionar Solicitud en Borrador) <br> • CU-03 (Consultar Historial) <br> • CU-07 (Confirmar Cierre y Calificar Servicio) |
 
-### 🧑‍⚖️ ACT-02 – Revisor de Gerencia / Jefatura
+### ACT-02 – Revisor de Gerencia / Jefatura
 | Campo | Descripción |
 |-------|-------------|
 | **ID** | ACT-02 |
@@ -16,7 +16,7 @@
 | **Permisos / Rol** | Aprobador / Evaluador |
 | **CU Relacionados** | • CU-04 (Evaluar y Responder Solicitud) <br> • CU-05 (Priorizar Bandeja de Entrada) <br> • CU-06 (Configurar Delegación Temporal) |
 
-### 🧑‍💼 ACT-03 – Auxiliar de Talento Humano
+### ACT-03 – Auxiliar de Talento Humano
 | Campo | Descripción |
 |-------|-------------|
 | **ID** | ACT-03 |
@@ -25,7 +25,7 @@
 | **Permisos / Rol** | Consultor Operativo |
 | **CU Relacionados** | • CU-04 (Evaluar y Responder Solicitud) |
 
-### 🗂️ ACT-04 – Gestor Documental / Soporte
+### ACT-04 – Gestor Documental / Soporte
 | Campo | Descripción |
 |-------|-------------|
 | **ID** | ACT-04 |
@@ -34,7 +34,7 @@
 | **Permisos / Rol** | Administrador del Sistema |
 | **CU Relacionados** | • CU-08 (Autenticar Usuario) <br> • CU-10 (Consultar Log de Auditoría) |
 
-### 🔔 ACT-05 – Sistema de Notificaciones Electrónicas
+### ACT-05 – Sistema de Notificaciones Electrónicas
 | Campo | Descripción |
 |-------|-------------|
 | **ID** | ACT-05 |
@@ -43,7 +43,7 @@
 | **Permisos / Rol** | Sistema de Alertas Automáticas |
 | **CU Relacionados** | • CU-01 (Registrar Solicitud) <br> • CU-04 (Evaluar y Responder Solicitud) <br> • CU-09 (Recuperar Contraseña) |
 
-### 📝 ACT-06 – Servicio de Firma Digital y Estampado de Tiempo
+### ACT-06 – Servicio de Firma Digital y Estampado de Tiempo
 | Campo | Descripción |
 |-------|-------------|
 | **ID** | ACT-06 |
