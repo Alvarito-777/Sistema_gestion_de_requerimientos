@@ -1,3 +1,5 @@
+# **Reglas De Negocio**
+
 Campo | Descripción
 --------|-------------
 ID | RN 01
