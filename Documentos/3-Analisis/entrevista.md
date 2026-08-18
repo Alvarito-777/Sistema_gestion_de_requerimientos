@@ -1,3 +1,5 @@
+# **Entrevista**
+
 | Pregunta | Hallazgos principales |
 |----------|------------------------|
 | **P1. Área o departamento** | Operaciones/Producción lidera con **34.5%**, seguido por Gerencia/Administrativo (**22.4%**) y Tecnología/Sistemas (**20.7%**). |
