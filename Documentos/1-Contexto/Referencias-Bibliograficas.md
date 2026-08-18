@@ -1,4 +1,4 @@
-# Referencias Bibliográficas
+# **Referencias Bibliográficas**
 **Gestión de Requerimientos Estratégicos y Trazabilidad de Procesos**
 
 ---
