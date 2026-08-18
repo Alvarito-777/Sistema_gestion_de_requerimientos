@@ -1,3 +1,5 @@
+# **Diccionario De Datos**
+
 Entidad: Usuario
 
 atributo | tipo | PK | Req | regla de negocio
