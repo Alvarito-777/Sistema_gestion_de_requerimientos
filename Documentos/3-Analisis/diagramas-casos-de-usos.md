@@ -1,3 +1,4 @@
+```mermaid
 graph TD
 
 %% Actores Primarios
@@ -41,50 +42,4 @@ subgraph Modulo_Seguridad[Cierres, Seguridad y Auditoría]
     CU08(("CU-08: Confirmar Cierre y Calificar Servicio"))
     CU09(("CU-09: Autenticar Usuario y Controlar Sesión"))
     CU10(("CU-10: Consultar Log de Auditoría"))
-    CU11(("CU-11: Recuperar Contraseña de Usuario"))
-    CU15(("CU-15: Exportar Bitácora de Auditoría"))
-end
-
-%% Relaciones: ACT-01 (Solicitante)
-ACT01 --> CU01
-ACT01 --> CU02
-ACT01 --> CU03
-ACT01 --> CU04
-ACT01 --> CU08
-ACT01 --> CU11
-ACT01 --> CU12
-
-%% Relaciones: ACT-02 (Revisor / Gerencia)
-ACT02 --> CU04
-ACT02 --> CU05
-ACT02 --> CU06
-ACT02 --> CU07
-ACT02 --> CU11
-ACT02 --> CU12
-ACT02 --> CU13
-ACT02 --> CU14
-
-%% Relaciones: ACT-03 (Talento Humano)
-ACT03 --> CU05
-
-%% Relaciones: ACT-04 (Administrador)
-ACT04 --> CU09
-ACT04 --> CU10
-ACT04 --> CU15
-
-%% Relaciones: ACT-05 (Notificaciones)
-CU01 -.-> ACT05
-CU05 -.-> ACT05
-CU11 -.-> ACT05
-
-%% Relaciones: ACT-06 (Firma Digital y Estampado)
-CU03 -.-> ACT06
-CU05 -.-> ACT06
-CU08 -.-> ACT06
-CU10 -.-> ACT06
-CU12 -.-> ACT06
-CU14 -.-> ACT06
-
-%% Relaciones Include / Extend
-CU01 ..> CU02 : <<extend>>
-CU10 ..> CU15 : <<extend>>
+    CU11(("CU-1
