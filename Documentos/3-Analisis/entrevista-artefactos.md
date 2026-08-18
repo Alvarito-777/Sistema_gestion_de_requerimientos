@@ -1,6 +1,6 @@
 # **Entrevista: Artefactos**
---
-# **Formulario de Sistema de Gestión de Solicitudes 2026‑1**
+
+## **Formulario de Sistema de Gestión de Solicitudes 2026‑1**
 
 ## **Instrucciones generales**
 
