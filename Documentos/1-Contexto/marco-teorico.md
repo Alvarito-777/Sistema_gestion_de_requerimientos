@@ -1,3 +1,5 @@
+# **Marco Teórica**
+
 El sustento técnico de este proyecto se divide en la comprensión de la información como un activo sistémico y la aplicación de modelos de ciclo de vida que garanticen la persistencia del dato.
 
 1. Conceptos Claves y Definiciones Formales
