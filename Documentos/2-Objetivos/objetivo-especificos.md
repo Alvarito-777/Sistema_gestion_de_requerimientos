@@ -1,3 +1,5 @@
+# **Objetivos Especificos**
+
 1.	Fase de Análisis: Levantar como producto técnico la especificación de requisitos de software (ERS) detallada, porque la actual ausencia de documentación formal impide la estandarización de las solicitudes, para establecer una línea base técnica que elimine la ambigüedad operativa y el ruido en la comunicación de la empresa.
 
 2.	Fase de Diseño: Modelar como componente estructural el diagrama de entidad-relación y la arquitectura lógica del sistema, porque es imperativo erradicar el uso de archivos locales y la redundancia de datos dispersos, para garantizar la integridad referencial y asegurar que exista una fuente única de verdad para todos los departamentos.
