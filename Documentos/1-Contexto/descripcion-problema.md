@@ -1,3 +1,5 @@
+# **Descripción del problema**
+
 "En una ciudad donde el café se enfría más rápido que las decisiones, existe una empresa llamada nexa servicios. No es una empresa mala, al contrario: trabaja duro, atiende clientes y sobrevive con una mezcla de talento, paciencia y algo de fe. El problema es que en nexa servicios tienen un enemigo silencioso, el desorden digital. Los procesos funcinan así:
 
 1. Si alguien necesita algo lo manda por wpp, a veces al grupo equivocado.
