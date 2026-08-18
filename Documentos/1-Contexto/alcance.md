@@ -1,4 +1,4 @@
-## * **Alcance**
+## **Alcance**
 
 ### Módulo de Gestión de Tickets - Solicitudes
 * **Registro de solicitudes:** Permitir a estudiantes, docentes y administrativos radicar solicitudes de soporte técnico especificando el equipo afectado y la descripción de la falla.
