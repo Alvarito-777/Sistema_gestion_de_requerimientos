@@ -317,3 +317,33 @@ ID | RF 53
 HU Relacionada | HU 21 (Proceso de Cierre Automático)
 Descripción | El sistema debe cerrar automáticamente y calificar con 3 estrellas los casos que cumplan 5 días hábiles sin confirmación del empleado.
 
+| **Campo** | **Descripción** |
+|----------|------------------|
+| **ID** | RF-54 |
+| **HU Relacionada** | HU-23 |
+| **Descripción** | El sistema debe permitir al ACT-04 crear cuentas con nombre_completo, correo_corporativo, contraseña inicial y rol (valores del ENUM), inicializando estado_cuenta = true. |
+
+| **Campo** | **Descripción** |
+|----------|------------------|
+| **ID** | RF-55 |
+| **HU Relacionada** | HU-23 / HU-24 / HU-25 |
+| **Descripción** | El sistema debe presentar al ACT-04 un maestro de cuentas con búsqueda por nombre o correo, filtro por estado_cuenta y paginación, sin exponer jamás contraseña_hash. |
+
+| **Campo** | **Descripción** |
+|----------|------------------|
+| **ID** | RF-56 |
+| **HU Relacionada** | HU-24 |
+| **Descripción** | El sistema debe permitir modificar nombre_completo, correo_corporativo y rol de una cuenta, revalidando formato y unicidad del correo antes de persistir. |
+
+| **Campo** | **Descripción** |
+|----------|------------------|
+| **ID** | RF-57 |
+| **HU Relacionada** | HU-25 |
+| **Descripción** | El sistema debe inactivar cuentas cambiando estado_cuenta a false (eliminación lógica, nunca DELETE), previa confirmación explícita, y permitir su reactivación; una cuenta inactiva no supera el RF-45. |
+
+| **Campo** | **Descripción** |
+|----------|------------------|
+| **ID** | RF-58 |
+| **HU Relacionada** | HU-23 / HU-24 / HU-25 |
+| **Descripción** | Toda operación administrativa sobre cuentas debe registrarse en la entidad Log_auditoria con operación, valores anterior y nuevo, responsable y fecha/hora. |
+
