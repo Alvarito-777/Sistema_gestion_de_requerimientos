@@ -34,7 +34,7 @@
 | **Nombre del Actor** | Gestor Documental / Soporte |
 | **Tipo** | Secundario |
 | **Permisos / Rol** | Administrador del Sistema |
-| **CU Relacionados** | • CU-08 (Autenticar Usuario) <br> • CU-10 (Consultar Log de Auditoría) |
+| **CU Relacionados** | • CU-08 (Autenticar Usuario) <br> • CU-10 (Consultar Log de Auditoría) <br> • CU-16 (Gestionar Cuentas de usuario) |
 
 ### ACT-05 – Sistema de Notificaciones Electrónicas
 | Campo | Descripción |
