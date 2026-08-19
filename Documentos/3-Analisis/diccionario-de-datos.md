@@ -58,13 +58,14 @@ fecha_evento | DATETIME | — | Sí | Fecha y hora del evento, registrada autom�
 
 Entidad: Rol
 
-| **Campo**              | **Tipo**    | **Longitud** | **PK/FK** | **Req.** | **Descripción / Regla de Negocio** |
-|------------------------|-------------|--------------|-----------|----------|------------------------------------|
-| **id_rol**             | INT         | —            | PK        | Sí       | Identificador único autoincremental del rol dentro del sistema. |
-| **nombre_rol**         | ENUM        | —            | —         | Sí       | Nombre del rol en la plataforma. Valores permitidos: Solicitante, Aprobador, Gestion_Personal, Administrador. |
-| **descripcion**        | VARCHAR     | 255          | —         | Sí       | Explicación detallada de las funciones y alcance operativo del rol. |
-| **permiso_crear**      | BOOLEAN     | —            | —         | Sí       | Indica si el rol puede radicar nuevas solicitudes (true / false). |
-| **permiso_evaluar**    | BOOLEAN     | —            | —         | Sí       | Indica si el rol puede aprobar, rechazar o devolver solicitudes (true / false). |
-| **permiso_administrar**| BOOLEAN     | —            | —         | Sí       | Indica si el rol tiene privilegios administrativos sobre usuarios, logs y configuración técnica (true / false). |
-| **fecha_creacion**     | DATETIME    | —            | —         | Sí       | Fecha y hora exacta de creación del rol (generada automáticamente por el servidor). |
+| **Campo**              | **Tipo**    | **PK/FK** | **Req.** | **Descripción / Regla de Negocio** |
+|------------------------|-------------|-----------|----------|------------------------------------|
+| **id_rol**             | INT         | PK        | Sí       | Identificador único autoincremental del rol dentro del sistema. |
+| **nombre_rol**         | ENUM        | —         | Sí       | Nombre del rol en la plataforma. Valores permitidos: Solicitante, Aprobador, Gestion_Personal, Administrador. |
+| **descripcion**        | VARCHAR     | —         | Sí       | Explicación detallada de las funciones y alcance operativo del rol. |
+| **permiso_crear**      | BOOLEAN     | —         | Sí       | Indica si el rol puede radicar nuevas solicitudes (true / false). |
+| **permiso_evaluar**    | BOOLEAN     | —         | Sí       | Indica si el rol puede aprobar, rechazar o devolver solicitudes (true / false). |
+| **permiso_administrar**| BOOLEAN     | —         | Sí       | Indica si el rol tiene privilegios administrativos sobre usuarios, logs y configuración técnica (true / false). |
+| **fecha_creacion**     | DATETIME    | —         | Sí       | Fecha y hora exacta de creación del rol (generada automáticamente por el servidor). |
+
 
