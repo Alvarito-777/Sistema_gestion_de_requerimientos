@@ -191,16 +191,6 @@
 | **Precondiciones** | Estar en pantalla del Log con rol de Administrador. |
 | **Postcondiciones** | Éxito: Copia física legal del rastro técnico.<br>Fallo: Alteración o edición del log antes de exportar. |
 
----
 
-# CU-16 — Gestionar Cuentas de Usuario
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-16 |
-| **Nombre** | Gestionar Cuentas de Usuario |
-| **HU Relacionada** | HU-23, HU-24, HU-25 |
-| **Actor(es)** | ACT-04 (Gestor Documental / Soporte) |
-| **Descripción** | Permitir al ACT-04 gestionar las cuentas de usuario mediante las operaciones de creación, edición e inactivación (relaciones «extend»), incluyendo la validación de datos y el registro en el log de auditoría (relaciones «include»). |
-| **Precondiciones** | La cuenta de usuario debe existir en el sistema y los datos deben estar previamente validados antes de ser creados, editados o inactivados. |
-| **Postcondiciones** | La cuenta de usuario es creada, editada o inactivada correctamente, quedando los cambios registrados en el Log de Auditoría y los datos validados. |
+
 
