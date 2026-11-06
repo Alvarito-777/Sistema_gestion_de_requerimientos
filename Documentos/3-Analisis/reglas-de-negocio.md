@@ -1,6 +1,6 @@
-# 2.2.2 Reglas de Negocio
+# Reglas de Negocio
 
-### Tabla 93. Regla de negocio RN-01 — Dominio de correo corporativo
+### Regla de negocio RN-01 — Dominio de correo corporativo
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -11,7 +11,7 @@
 
 ---
 
-### Tabla 94. Regla de negocio RN-02 — Bloqueo por intentos fallidos
+### Regla de negocio RN-02 — Bloqueo por intentos fallidos
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -22,7 +22,7 @@
 
 ---
 
-### Tabla 95. Regla de negocio RN-03 — Dominio de perfiles autorizados
+### Regla de negocio RN-03 — Dominio de perfiles autorizados
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -35,7 +35,7 @@
 
 ---
 
-### Tabla 96. Regla de negocio RN-04 — Desblindaje de identidad anónima
+### Regla de negocio RN-04 — Desblindaje de identidad anónima
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -46,7 +46,7 @@
 
 ---
 
-### Tabla 97. Regla de negocio RN-05 — Impedimento de autoaprobación
+### Regla de negocio RN-05 — Impedimento de autoaprobación
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -57,7 +57,7 @@
 
 ---
 
-### Tabla 98. Regla de negocio RN-06 — Justificación obligatoria en fallos
+### Regla de negocio RN-06 — Justificación obligatoria en fallos
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -70,7 +70,7 @@
 
 ---
 
-### Tabla 99. Regla de negocio RN-07 — Rango de calificación de servicio
+### Regla de negocio RN-07 — Rango de calificación de servicio
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -81,7 +81,7 @@
 
 ---
 
-### Tabla 100. Regla de negocio RN-08 — Contenido mínimo de la interacción
+### Regla de negocio RN-08 — Contenido mínimo de la interacción
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -92,7 +92,7 @@
 
 ---
 
-### Tabla 101. Regla de negocio RN-09 — Trazabilidad inalterable de auditoría
+### Regla de negocio RN-09 — Trazabilidad inalterable de auditoría
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -103,7 +103,7 @@
 
 ---
 
-### Tabla 102. Regla de negocio RN-10 — Integridad de eliminación
+### Regla de negocio RN-10 — Integridad de eliminación
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -114,7 +114,7 @@
 
 ---
 
-### Tabla 103. Regla de negocio RN-11 — Unicidad de gestión activa
+### Regla de negocio RN-11 — Unicidad de gestión activa
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -125,7 +125,7 @@
 
 ---
 
-### Tabla 104. Regla de negocio RN-12 — Coherencia del cierre de gestión
+### Regla de negocio RN-12 — Coherencia del cierre de gestión
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -136,7 +136,7 @@
 
 ---
 
-### Tabla 105. Regla de negocio RN-13 — Habilitación y unicidad de la evaluación
+### Regla de negocio RN-13 — Habilitación y unicidad de la evaluación
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -147,7 +147,7 @@
 
 ---
 
-### Tabla 106. Regla de negocio RN-14 — Validez de la fecha de radicación
+### Regla de negocio RN-14 — Validez de la fecha de radicación
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -158,7 +158,7 @@
 
 ---
 
-### Tabla 107. Regla de negocio RN-15 — Estado nuevo condicionado a la acción
+### Regla de negocio RN-15 — Estado nuevo condicionado a la acción
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -169,7 +169,7 @@
 
 ---
 
-### Tabla 108. Regla de negocio RN-16 — Inactivación lógica de catálogos
+### Regla de negocio RN-16 — Inactivación lógica de catálogos
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -180,7 +180,7 @@
 
 ---
 
-### Tabla 109. Regla de negocio RN-17 — Validación de unicidad y estado para asignación de rol
+### Regla de negocio RN-17 — Validación de unicidad y estado para asignación de rol
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -191,7 +191,7 @@
 
 ---
 
-### Tabla 110. Regla de negocio RN-18 — Mantenimiento de rol mínimo por usuario
+### Regla de negocio RN-18 — Mantenimiento de rol mínimo por usuario
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -202,7 +202,7 @@
 
 ---
 
-### Tabla 111. Regla de negocio RN-19 — Bloqueo de edición en estados no permitidos
+### Regla de negocio RN-19 — Bloqueo de edición en estados no permitidos
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -213,7 +213,7 @@
 
 ---
 
-### Tabla 112. Regla de negocio RN-20 — Control de privilegios para baja lógica
+### Regla de negocio RN-20 — Control de privilegios para baja lógica
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -224,7 +224,7 @@
 
 ---
 
-### Tabla 113. Regla de negocio RN-21 — Unicidad del código de tipo de solicitud
+### Regla de negocio RN-21 — Unicidad del código de tipo de solicitud
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -235,7 +235,7 @@
 
 ---
 
-### Tabla 114. Regla de negocio RN-22 — Unicidad de código y nombre de estados
+### Regla de negocio RN-22 — Unicidad de código y nombre de estados
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -246,7 +246,7 @@
 
 ---
 
-### Tabla 115. Regla de negocio RN-23 — Restricción de alteración de estado final
+### Regla de negocio RN-23 — Restricción de alteración de estado final
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -257,7 +257,7 @@
 
 ---
 
-### Tabla 116. Regla de negocio RN-24 — Dominio de valores de prioridad de gestión
+### Regla de negocio RN-24 — Dominio de valores de prioridad de gestión
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -268,7 +268,7 @@
 
 ---
 
-### Tabla 117. Regla de negocio RN-25 — Control de acceso al módulo de auditoría
+### Regla de negocio RN-25 — Control de acceso al módulo de auditoría
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -279,7 +279,7 @@
 
 ---
 
-### Tabla 118. Regla de negocio RN-26 — Consistencia de rangos de fechas en reportes
+### Regla de negocio RN-26 — Consistencia de rangos de fechas en reportes
 
 | Atributo | Detalle |
 | ----- | ----- |
@@ -290,7 +290,7 @@
 
 ---
 
-### Tabla 119. Regla de negocio RN-27 — Validación de rol de gestión de personal
+### Regla de negocio RN-27 — Validación de rol de gestión de personal
 
 | Atributo | Detalle |
 | ----- | ----- |
