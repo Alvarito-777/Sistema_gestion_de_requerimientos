@@ -1,14 +1,14 @@
 -- =====================================================================================
--- Proyecto  : Sistema de Gestión de Requerimientos (RMS) · NexaServicios
---             Ingeniería de Software II · Rebeca López Buelvas · Alvaro Tamayo Sierra
--- Archivo   : db/script_bd_gestion_requerimientos.sql
--- Historial : v1.0  2026-11-05  LB-1 (creación)                  -- cabecera de historial (GCS)
---             (todo cambio posterior entra por CRF y agrega una línea aquí: vX.Y fecha CRF-nnn LB-n)
--- Nace de   : Modelo Relacional (3.2 · paso 6) ← Diccionario de Datos (3.1 · paso 5)
---             Restricciones ← Matriz consolidada de Reglas de Negocio (RN-01 a RN-27)
--- Motor     : MySQL 8 · InnoDB · utf8mb4 / utf8mb4_0900_ai_ci
--- Reglas    : cada tabla es la imagen exacta del MR; cada CONSTRAINT lleva nombre propio y
---             cita su RN. Este archivo nunca elimina datos.
+-- Proyecto   : Sistema de Gestión de Requerimientos (RMS) · NexaServicios
+--              Ingeniería de Software II · Rebeca López Buelvas · Alvaro Tamayo Sierra
+-- Archivo    : db/script_bd_gestion_requerimientos.sql
+-- Historial  : v1.0  2026-11-05  LB-1 (creación)                  -- cabecera de historial (GCS)
+--              (todo cambio posterior entra por CRF y agrega una línea aquí: vX.Y fecha CRF-nnn LB-n)
+-- Nace de    : Modelo Relacional (3.2 · paso 6) ← Diccionario de Datos (3.1 · paso 5)
+--              Restricciones ← Matriz consolidada de Reglas de Negocio (RN-01 a RN-27)
+-- Motor      : MySQL 8 · InnoDB · utf8mb4 / utf8mb4_0900_ai_ci
+-- Reglas     : cada tabla es la imagen exacta del MR; cada CONSTRAINT lleva nombre propio y
+--              cita su RN. Este archivo nunca elimina datos.
 -- =====================================================================================
 CREATE DATABASE IF NOT EXISTS gestion_requerimientos
   CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
@@ -271,7 +271,7 @@ CREATE TABLE bitacora_auditoria (
     ON DELETE RESTRICT ON UPDATE CASCADE                               -- RN-10
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Creación de índices optimizados para bitacora_auditoria
+-- Índices de optimización para la bitácora de auditoría
 CREATE INDEX idx_bitacora_solicitud        ON bitacora_auditoria (id_solicitud);
 CREATE INDEX idx_bitacora_entidad_registro ON bitacora_auditoria (entidad_afectada, id_registro_afectado);
 CREATE INDEX idx_bitacora_usuario          ON bitacora_auditoria (id_usuario_accion);
