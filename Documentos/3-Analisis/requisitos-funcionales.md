@@ -228,3 +228,256 @@
 | **RN que hace cumplir** | RN-23 (Restricción de alteración de estado final) |
 | **Prioridad** | Baja |
 
+---
+
+## Entidad: Solicitud
+
+### Requisito funcional RF-21: Crear borrador de solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-21[cite: 4] |
+| **Nombre corto** | Crear borrador de solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir al Solicitante crear una solicitud en estado de borrador ingresando un asunto, descripción y seleccionando un tipo de solicitud, asociando automáticamente el código del usuario, estableciendo el estado en "BORRADOR" y dejando la fecha de radicación en nulo. El sistema debe validar que el tipo de solicitud seleccionado esté activo.[cite: 4] |
+| **HU de origen** | HU-21[cite: 4] |
+| **RN que hace cumplir** | RN-16 (Inactivación lógica de catálogos)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-22: Consultar expediente de solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-22[cite: 4] |
+| **Nombre corto** | Consultar expediente de solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir consultar los datos detallados de una solicitud mediante su identificador único, mostrando el asunto, descripción, tipo, estado, fecha de radicación y el solicitante. Si la solicitud es anónima (`anonimo_bloqueado = true`), el sistema debe proteger la identidad ocultando el nombre del solicitante con una etiqueta genérica.[cite: 4] |
+| **HU de origen** | HU-22[cite: 4] |
+| **RN que hace cumplir** | RN-04 (Desblindaje de identidad anónima)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-23: Actualizar contenido de solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-23[cite: 4] |
+| **Nombre corto** | Actualizar contenido de solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir al Solicitante modificar el asunto o la descripción de una solicitud únicamente cuando se encuentre en estado "BORRADOR" o "PENDIENTE_AJUSTES", registrando la fecha de actualización. El sistema debe bloquear la edición si la solicitud ya está en trámite o cerrada.[cite: 4] |
+| **HU de origen** | HU-23[cite: 4] |
+| **RN que hace cumplir** | RN-19 (Bloqueo de edición en estados no permitidos)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-24: Radicar solicitud formalmente
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-24[cite: 4] |
+| **Nombre corto** | Radicar solicitud formalmente[cite: 4] |
+| **Descripción** | El sistema debe permitir al Solicitante radicar formalmente una solicitud que se encuentre en estado de borrador y tenga la información completa, cambiando su estado a "PENDIENTE", generando un código único de radicado institucional y asignando una fecha de radicación inalterable.[cite: 4] |
+| **HU de origen** | HU-24[cite: 4] |
+| **RN que hace cumplir** | RN-14 (Validez de la fecha de radicación); RN-15 (Estado nuevo condicionado a la acción); RN-16 (Inactivación lógica de catálogos)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-25: Cambiar estado de la solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-25[cite: 4] |
+| **Nombre corto** | Cambiar estado de la solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir actualizar el estado de una solicitud en el flujo de trabajo y registrar automáticamente la transición en la bitácora de auditoría (incluyendo estado previo, nuevo estado y fecha). Asimismo, debe impedir transiciones no válidas desde estados terminales.[cite: 4] |
+| **HU de origen** | HU-25[cite: 4] |
+| **RN que hace cumplir** | RN-15 (Estado nuevo condicionado a la acción)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-26: Desblindar identidad de solicitud anónima
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-26[cite: 4] |
+| **Nombre corto** | Desblindar identidad de solicitud anónima[cite: 4] |
+| **Descripción** | El sistema debe permitir a los usuarios con rol de Gerente o Administrador revelar la identidad del solicitante en peticiones marcadas como anónimas, generando de inmediato un registro inmutable en la bitácora de auditoría y bloqueando la acción a usuarios que no posean los privilegios requeridos.[cite: 4] |
+| **HU de origen** | HU-26[cite: 4] |
+| **RN que hace cumplir** | RN-04 (Desblindaje de identidad anónima)[cite: 4] |
+| **Prioridad** | Media[cite: 4] |
+
+### Requisito funcional RF-27: Inactivar solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-27[cite: 4] |
+| **Nombre corto** | Inactivar solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir a un Administrador realizar la baja lógica de una solicitud existente mediante su identificador, cambiando su estado a inactivo y generando un registro correspondiente en la bitácora de auditoría. El sistema debe bloquear la acción si el usuario no tiene permisos o si la solicitud no existe.[cite: 4] |
+| **HU de origen** | HU-27[cite: 4] |
+| **RN que hace cumplir** | RN-20 (Control de privilegios para baja lógica)[cite: 4] |
+| **Prioridad** | Media[cite: 4] |
+
+---
+
+## Entidad: aprobacion_solicitud
+
+### Requisito funcional RF-28: Aprobar solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-28[cite: 4] |
+| **Nombre corto** | Aprobar solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir a un usuario con rol Aprobador o Gerente registrar la aprobación de una solicitud pendiente, cambiando su estado a "APROBADA" y registrando el comentario del dictamen. El sistema debe validar estrictamente que el evaluador no sea el mismo usuario que radicó la solicitud para evitar conflictos de interés.[cite: 4] |
+| **HU de origen** | HU-28[cite: 4] |
+| **RN que hace cumplir** | RN-05 (Impedimento de autoaprobación); RN-15 (Estado nuevo condicionado a la acción)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-29: Rechazar solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-29[cite: 4] |
+| **Nombre corto** | Rechazar solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir al Aprobador o Gerente rechazar una solicitud pendiente ingresando una justificación obligatoria, actualizando el estado de la solicitud a "RECHAZADA" y notificando al solicitante. El sistema debe bloquear la acción si el comentario de rechazo está vacío.[cite: 4] |
+| **HU de origen** | HU-29[cite: 4] |
+| **RN que hace cumplir** | RN-05 (Impedimento de autoaprobación); RN-06 (Justificación obligatoria en fallos); RN-15 (Estado nuevo condicionado a la acción)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-30: Devolver solicitud para ajustes
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-30[cite: 4] |
+| **Nombre corto** | Devolver solicitud para ajustes[cite: 4] |
+| **Descripción** | El sistema debe permitir al Aprobador o Gerente devolver una solicitud pendiente adjuntando observaciones obligatorias, cambiando su estado a "PENDIENTE_AJUSTES" y habilitando nuevamente los permisos de edición para el solicitante. El sistema debe exigir el ingreso del comentario para proceder.[cite: 4] |
+| **HU de origen** | HU-30[cite: 4] |
+| **RN que hace cumplir** | RN-05 (Impedimento de autoaprobación); RN-06 (Justificación obligatoria en fallos); RN-15 (Estado nuevo condicionado a la acción)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-31: Consultar dictamen de aprobación
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-31[cite: 4] |
+| **Nombre corto** | Consultar dictamen de aprobación[cite: 4] |
+| **Descripción** | El sistema debe permitir consultar la información completa de un dictamen de aprobación mediante su identificador único, mostrando la decisión adoptada, el comentario, la fecha y el nombre del evaluador responsable.[cite: 4] |
+| **HU de origen** | HU-31[cite: 4] |
+| **RN que hace cumplir** | Ninguna (Consulta y auditoría de dictámenes)[cite: 4] |
+| **Prioridad** | Media[cite: 4] |
+
+---
+
+## Entidad: gestion_solicitud
+
+### Requisito funcional RF-32: Asignar gestor a la solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-32[cite: 4] |
+| **Nombre corto** | Asignar gestor a la solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir a un Gerente asignar una solicitud aprobada a un gestor activo especificando su nivel de prioridad, creando un registro de gestión en estado "En_Proceso", registrando la fecha de vinculación y cambiando el estado de la solicitud a "EN_GESTION". El sistema debe validar mediante un disparador que la solicitud no posea otra gestión activa simultáneamente.[cite: 4] |
+| **HU de origen** | HU-32[cite: 4] |
+| **RN que hace cumplir** | RN-11 (Unicidad de gestión activa); RN-15 (Estado nuevo condicionado a la acción); RN-27 (Validación de rol de gestión de personal)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-33: Reasignar gestor a la solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-33[cite: 4] |
+| **Nombre corto** | Reasignar gestor a la solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir al Gerente redistribuir la carga operacional reasignando una solicitud a un gestor distinto. Al hacerlo, el sistema debe cambiar el estado del registro de gestión actual a "Reasignado", registrar su fecha de cierre y crear un nuevo registro de gestión en estado "En_Proceso" para el nuevo gestor, bloqueando la reasignación si se selecciona al mismo gestor actual.[cite: 4] |
+| **HU de origen** | HU-33[cite: 4] |
+| **RN que hace cumplir** | RN-11 (Unicidad de gestión activa); RN-27 (Validación de rol de gestión de personal)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-34: Actualizar prioridad de gestión
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-34[cite: 4] |
+| **Nombre corto** | Actualizar prioridad de gestión[cite: 4] |
+| **Descripción** | El sistema debe permitir al personal de gestión modificar el nivel de prioridad asignado a un caso activo, validando estrictamente que el valor pertenezca a la enumeración permitida (Baja, Media, Alta, Critica) y rechazando cualquier parámetro no válido.[cite: 4] |
+| **HU de origen** | HU-34[cite: 4] |
+| **RN que hace cumplir** | RN-24 (Dominio de valores de prioridad de gestión)[cite: 4] |
+| **Prioridad** | Media[cite: 4] |
+
+### Requisito funcional RF-35: Finalizar gestión de la solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-35[cite: 4] |
+| **Nombre corto** | Finalizar gestión de la solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir al gestor marcar la atención de un caso como finalizada, actualizando el estado de la gestión a "Finalizado", registrando la fecha de cierre y cambiando el estado de la solicitud a "SOLUCIONADO". El sistema debe verificar mediante restricciones que la fecha de cierre no sea anterior a la fecha de vinculación del gestor.[cite: 4] |
+| **HU de origen** | HU-35[cite: 4] |
+| **RN que hace cumplir** | RN-12 (Coherencia del cierre de gestión); RN-15 (Estado nuevo condicionado a la acción)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-36: Consultar registro de gestión
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-36[cite: 4] |
+| **Nombre corto** | Consultar registro de gestión[cite: 4] |
+| **Descripción** | El sistema debe permitir al Gerente consultar la información detallada de un registro de gestión buscando por su identificador único, mostrando la prioridad, el estado de la gestión, la fecha de vinculación y la fecha de cierre.[cite: 4] |
+| **HU de origen** | HU-36[cite: 4] |
+| **RN que hace cumplir** | Ninguna (Consulta y seguimiento de registros operativos)[cite: 4] |
+| **Prioridad** | Media[cite: 4] |
+
+---
+
+## Entidad: evaluacion
+
+### Requisito funcional RF-37: Calificar servicio recibido
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-37[cite: 4] |
+| **Nombre corto** | Calificar servicio recibido[cite: 4] |
+| **Descripción** | El sistema debe permitir al Solicitante calificar la atención recibida mediante un puntaje entero de 1 a 5 y un comentario opcional, asociándolo a una gestión. El sistema debe validar estrictamente que la gestión esté formalmente finalizada, que no exista una evaluación previa para el mismo caso y que el puntaje se encuentre dentro del rango permitido.[cite: 4] |
+| **HU de origen** | HU-37[cite: 4] |
+| **RN que hace cumplir** | RN-07 (Rango de calificación de servicio); RN-13 (Habilitación y unicidad de la evaluación)[cite: 4] |
+| **Prioridad** | Media[cite: 4] |
+
+### Requisito funcional RF-38: Consultar evaluación de servicio
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-38[cite: 4] |
+| **Nombre corto** | Consultar evaluación de servicio[cite: 4] |
+| **Descripción** | El sistema debe permitir al Gerente General consultar la información detallada de una evaluación de servicio buscando por su identificador único, mostrando el puntaje obtenido, el comentario, la fecha y el código de la gestión asociada.[cite: 4] |
+| **HU de origen** | HU-38[cite: 4] |
+| **RN que hace cumplir** | Ninguna (Consulta y análisis de métricas de satisfacción)[cite: 4] |
+| **Prioridad** | Media[cite: 4] |
+
+---
+
+## Entidad: detalle_solicitud
+
+### Requisito funcional RF-39: Crear detalle o interacción en solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-39[cite: 4] |
+| **Nombre corto** | Crear detalle o interacción en solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir publicar mensajes o adjuntar archivos en el historial de una solicitud, registrando automáticamente la fecha y hora de la interacción. El sistema debe validar que la publicación contenga al menos un mensaje de texto o un archivo adjunto, rechazando interacciones completamente vacías.[cite: 4] |
+| **HU de origen** | HU-39[cite: 4] |
+| **RN que hace cumplir** | RN-08 (Contenido mínimo de la interacción)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-40: Consultar detalles de una solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-40[cite: 4] |
+| **Nombre corto** | Consultar detalles de una solicitud[cite: 4] |
+| **Descripción** | El sistema debe permitir consultar todo el historial conversacional y los archivos adjuntos vinculados a una solicitud específica, mostrando el listado de interacciones ordenado de forma cronológica (de la más antigua a la más reciente).[cite: 4] |
+| **HU de origen** | HU-40[cite: 4] |
+| **RN que hace cumplir** | Ninguna (Consulta cronológica del hilo conversacional)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+---
+
+## Entidad: bitacora_auditoria
+
+### Requisito funcional RF-41: Registrar acción de auditoría
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-41[cite: 4] |
+| **Nombre corto** | Registrar acción de auditoría[cite: 4] |
+| **Descripción** | El sistema debe registrar automáticamente en la bitácora de auditoría cada evento relevante de la aplicación (creación, modificación, eliminación, inicio y cierre de sesión, bloqueo de cuenta, cambio de estado, asignación de rol y desbloqueo de identidad), con la entidad y el registro afectados, el usuario que ejecuta la acción, los estados anterior y nuevo cuando la acción es un cambio de estado, y la fecha y hora del evento. Los registros son de solo lectura e inmutables (RN-09) y todo cambio de estado de una solicitud debe quedar registrado (RN-15).[cite: 4] |
+| **HU de origen** | HU-41[cite: 4] |
+| **RN que hace cumplir** | RN-09 (Trazabilidad inalterable de auditoría); RN-15 (Estado nuevo condicionado a la acción)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-42: Consultar auditoría por entidad y registro
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-42[cite: 4] |
+| **Nombre corto** | Consultar auditoría por entidad y registro[cite: 4] |
+| **Descripción** | El sistema debe permitir aos usuarios con rol de Gerente o Auditor consultar las trazas de auditoría filtradas por entidad e identificador de registro. El sistema restringirá el acceso a esta consulta a usuarios que no posean dichos roles.[cite: 4] |
+| **HU de origen** | HU-42[cite: 4] |
+| **RN que hace cumplir** | RN-25 (Control de acceso al módulo de auditoría)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
+
+### Requisito funcional RF-43: Consultar auditoría por rango de fechas
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | RF-43[cite: 4] |
+| **Nombre corto** | Consultar auditoría por rango de fechas[cite: 4] |
+| **Descripción** | El sistema debe permitir a los usuarios autorizados generar reportes de las trazas de auditoría ocurridas dentro de un periodo de tiempo específico, validando que la fecha inicial (desde) no sea posterior a la fecha final (hasta).[cite: 4] |
+| **HU de origen** | HU-43[cite: 4] |
+| **RN que hace cumplir** | RN-26 (Consistencia de rangos de fechas en reportes)[cite: 4] |
+| **Prioridad** | Alta[cite: 4] |
