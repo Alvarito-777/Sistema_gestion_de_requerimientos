@@ -1,8 +1,11 @@
 # Diagrama y Especificación de Casos de Uso Críticos
 
-## 2.3.2 Casos de uso críticos documentados y justificación de la selección
+<img width="1000" height="690" alt="image" src="https://github.com/user-attachments/assets/a9194526-2517-4515-8bf6-6f1c141ec77d" />
 
-### Tabla 140. Casos de uso críticos seleccionados
+
+## Casos de uso críticos documentados y justificación de la selección
+
+### Casos de uso críticos seleccionados
 
 | Código | Caso de uso | Actor principal | HU | RF | RN que hace cumplir |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -15,11 +18,9 @@
 
 ## CU-24: Radicar solicitud formalmente
 
-*[Insertar Figura 3 aquí]*
+<img width="774" height="690" alt="image" src="https://github.com/user-attachments/assets/266f4d7e-83df-472a-9eb1-1f201297a8d0" />
 
-> **Nota:** El título interno de la imagen dice «CU-01»; el código vigente del caso de uso es `CU-24`, igual que en la matriz de trazabilidad.
-
-### Tabla 141. Especificación del caso de uso CU-24 Radicar solicitud formalmente
+### Especificación del caso de uso CU-24 Radicar solicitud formalmente
 
 | Elemento | Descripción / Valor | Procedencia |
 | :--- | :--- | :--- |
@@ -43,9 +44,10 @@
 
 ## CU-27: Aprobar solicitud
 
-*[Insertar Figura 4 aquí]*
+<img width="780" height="500" alt="image" src="https://github.com/user-attachments/assets/4676cbb4-71c0-4d94-9869-cc41c845dbbb" />
 
-### Tabla 142. Especificación del caso de uso CU-27 Aprobar solicitud
+
+### Especificación del caso de uso CU-27 Aprobar solicitud
 
 | Elemento | Descripción / Valor | Procedencia |
 | :--- | :--- | :--- |
@@ -70,9 +72,10 @@
 
 ## CU-33: Asignar gestor a la solicitud
 
-*[Insertar Figura 5 aquí]*
+<img width="683" height="690" alt="image" src="https://github.com/user-attachments/assets/e9854d21-f82e-4fa5-8de7-0e946ae83ea3" />
 
-### Tabla 143. Especificación del caso de uso CU-33 Asignar gestor a la solicitud
+
+### Especificación del caso de uso CU-33 Asignar gestor a la solicitud
 
 | Elemento | Descripción / Valor | Procedencia |
 | :--- | :--- | :--- |
@@ -94,9 +97,10 @@
 
 ## CU-36: Finalizar gestión de la solicitud
 
-*[Insertar Figura 6 aquí]*
+<img width="703" height="690" alt="image" src="https://github.com/user-attachments/assets/3a3fecda-b6ee-4417-8fc7-fe08d9c818f8" />
 
-### Tabla 144. Especificación del caso de uso CU-36 Finalizar gestión de la solicitud
+
+### Especificación del caso de uso CU-36 Finalizar gestión de la solicitud
 
 | Elemento | Descripción / Valor | Procedencia |
 | :--- | :--- | :--- |
