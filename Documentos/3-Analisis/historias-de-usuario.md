@@ -581,3 +581,15 @@
 | **Origen de la necesidad** | Pregunta 15 del formulario y método consultarPorRango(desde, hasta) de la clase Bitacora_Auditoria. |
 | **RF derivados** | RF-43 |
 | **Prioridad** | Alta |
+
+
+## Exportar informe de auditoría
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-45 |
+| **Título corto** | Exportar informe de auditoría |
+| **Historia** | Como Gerente o Auditor, quiero exportar los registros filtrados de la bitácora de auditoría en formato CSV o PDF, para realizar análisis de seguridad y auditorías externas sin alterar los datos del sistema. |
+| **Criterios de aceptación** | **Antecedentes:**<br># Se cumple antes de CADA escenario de esta historia · equivale a la precondición del CU<br>**Dado** que el auditor "Carlos Fernández" ha iniciado sesión con rol de Auditor o Gerente<br><br>**Escenario: CA-1 Exportación exitosa de informe en formato CSV o PDF**<br># `exportarInforme(formato)`<br>**Dado** que existen registros de auditoría filtrados en la interfaz de consulta<br>**Cuando** Carlos selecciona el formato "CSV" (o PDF) y hace clic en el botón "Exportar Informe"<br>**Entonces** el sistema genera y descarga el archivo comprimido o documento con los datos correspondientes, registrando la acción en la bitácora (RN-09, RN-25)<br><br>**Escenario: CA-2 Intento de exportación por usuario sin privilegios**<br>**Dado** que el usuario "Andrés Mejía" tiene el rol de Auxiliar Administrativo (sin privilegios de auditoría)<br>**Cuando** Andrés intenta acceder o ejecutar la exportación del informe de auditoría<br>**Entonces** el sistema restringe el acceso y muestra la alerta de seguridad correspondiente ("No cuenta con los privilegios requeridos para exportar informes de auditoría", RN-25) |
+| **Origen de la necesidad** | Requerimiento de control y seguridad institucional para la trazabilidad y rendición de cuentas ante entes de control externos. |
+| **RF derivados** | RF-45 (exportar informe de auditoría) — propuesto; se formaliza en la sección 2.2 |
+| **Prioridad** | Media |
