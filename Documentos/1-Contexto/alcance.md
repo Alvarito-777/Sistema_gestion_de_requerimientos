@@ -1,20 +1,42 @@
-## **Alcance**
+# Alcance Técnico de la Solución
 
-### Módulo de Gestión de Tickets - Solicitudes
-* **Registro de solicitudes:** Permitir a estudiantes, docentes y administrativos radicar solicitudes de soporte técnico especificando el equipo afectado y la descripción de la falla.
-* **Radicación única:** Generación automática de un código de radicado único por ticket para su posterior trazabilidad.
-* **Flujo de estados:** Transición controlada del ticket a través de estados predefinidos (`Abierto`, `En proceso`, `Cerrado`, `Rechazado`) mediante tipos de datos restringidos (`ENUM`).
-* **Cierre justificado:** Obligatoriedad de ingresar una descripción técnica de la solución antes de permitir el cierre definitivo de una solicitud.
-* **Reapertura de solicitudes:** Opción para que el usuario pueda rechazar el cierre de un ticket dentro de un plazo límite si considera que el problema persiste.
+El sistema está diseñado para gestionar de forma centralizada las solicitudes y requerimientos estratégicos de la gerencia en la empresa **Nexa Servicios**. A continuación, se define el alcance técnico de la solución:
 
-### Módulo de Gestión de Técnicos y Atención
-* **Visualización de cola de trabajo:** Panel para que los técnicos consulten tickets pendientes (`Abiertos` o `En proceso`) ordenados por prioridad o fecha.
-* **Asignación de responsables:** Vinculación directa de un técnico a cada solicitud de soporte.
-* **Alertas por inactividad:** Notificación automática al Jefe de TI cuando un ticket supere las 48 horas sin asignación.
+## Módulos y Entidades dentro del Alcance (Lo que hace el sistema)
 
-### Módulo de Inventario de Equipos
-* **Registro de activos:** Control centralizado de equipos de cómputo indicando su responsable, ubicación (aula/oficina) y estado de garantía.
-* **Trazabilidad de fallas:** Asociación directa entre el equipo registrado en el inventario y los tickets de soporte generados.
+### 1. Gestión de Accesos y Seguridad
+* **Entidades:** `rol`, `usuario`, `usuario_rol`
+* **Funcionalidad:**
+  * Administración de cuentas de usuario corporativas y asignación de roles estructurados (`Solicitante`, `Aprobador`, `Gestion_Personal`, `Gerente` y `Administrador`; véase la nota de la RN-03 sobre el rol `Auditor`).
+  * Control de autenticación, control de intentos fallidos y protección de identidades anónimas.
 
-### Módulo de Reportes y Métrica (Jefe de TI)
-* **Panel de control (Dashboard):** Visualización de métricas mensuales sobre tickets pendientes, resueltos por período y rendimiento por técnico.
+### 2. Radicación y Ciclo de Vida de Peticiones
+* **Entidades:** `solicitud`, `estado_solicitud`, `tipo_solicitud`
+* **Funcionalidad:**
+  * Creación de borradores y radicación formal de solicitudes estratégicas por parte de los usuarios (`solicitud`).
+  * Trazabilidad de estados y cambios de flujo respaldados por la bitácora del sistema.
+
+### 3. Evaluación y Aprobación de Solicitudes
+* **Entidades:** `aprobacion_solicitud`
+* **Funcionalidad:**
+  * Módulo para que los aprobadores autoricen, rechacen o devuelvan solicitudes para ajustes, exigiendo justificaciones obligatorias y previniendo conflictos de interés.
+
+### 4. Atención y Ejecución Operativa
+* **Entidades:** `gestion_solicitud`
+* **Funcionalidad:**
+  * Asignación de requerimientos a gestores, priorización de casos y registro de tiempos de vinculación y cierre operativo.
+
+### 5. Interacción y Seguimiento
+* **Entidades:** `detalle_solicitud`
+* **Funcionalidad:**
+  * Registro cronológico de mensajes y documentos adjuntos en un hilo conversacional unificado para cada expediente.
+
+### 6. Evaluación de Satisfacción
+* **Entidades:** `evaluacion`
+* **Funcionalidad:**
+  * Calificación del servicio recibido por parte del solicitante una vez la gestión se encuentre finalizada.
+
+### 7. Auditoría e Inalterabilidad
+* **Entidades:** `bitacora_auditoria`
+* **Funcionalidad:**
+  * Registro automático, permanente e inalterable de cada evento transaccional y cambio de estado ocurrido en la plataforma.
