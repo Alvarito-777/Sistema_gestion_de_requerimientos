@@ -1,196 +1,115 @@
-# CU-01 — Registrar Solicitud Formal
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-01 |
-| **Nombre** | Registrar Solicitud Formal |
-| **HU Relacionada** | HU-01 |
-| **Actor(es)** | ACT-01 (Desarrollador de Software), ACT-05 (Sistema de Notificaciones Electrónicas) |
-| **Descripción** | Permitir al empleado crear y enviar una petición formal llenando los campos necesarios y adjuntando soportes si es requerido. |
-| **Precondiciones** | El usuario debe haber iniciado sesión correctamente. |
-| **Postcondiciones** | Éxito: La solicitud queda en estado “Pendiente” y se envía correo con radicado.<br>Fallo: El sistema no guarda datos y mantiene el formulario editable mostrando el error. |
+# Diagrama y Especificación de Casos de Uso Críticos
+
+## 2.3.2 Casos de uso críticos documentados y justificación de la selección
+
+### Tabla 140. Casos de uso críticos seleccionados
+
+| Código | Caso de uso | Actor principal | HU | RF | RN que hace cumplir |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **CU-24** | Radicar solicitud formalmente | Solicitante | HU-24 | RF-24 | RN-14, RN-15, RN-16 |
+| **CU-27** | Aprobar solicitud | Aprobador / Gerente | HU-28 (con HU-29 y HU-30 como alternativos) | RF-28 (RF-29, RF-30) | RN-05, RN-06, RN-15 |
+| **CU-33** | Asignar gestor a la solicitud | Gerente | HU-32 | RF-32 | RN-11, RN-15, RN-27 |
+| **CU-36** | Finalizar gestión de la solicitud | Gestor / Personal de Gestión | HU-35 | RF-35 | RN-12, RN-15 |
 
 ---
 
-# CU-02 — Gestionar Solicitud en Borrador
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-02 |
-| **Nombre** | Gestionar Solicitud en Borrador |
-| **HU Relacionada** | HU-02 |
-| **Actor(es)** | ACT-01 (Desarrollador de Software) |
-| **Descripción** | Permitir reabrir un formulario guardado localmente para completar datos, cambiar archivos o cancelar el proceso antes del envío definitivo. |
-| **Precondiciones** | Debe existir al menos una solicitud guardada como borrador. |
-| **Postcondiciones** | Éxito: Se convierte en radicado oficial o se mantiene intacto si se cancela.<br>Fallo: El borrador se daña o se borra sin aprobación del usuario. |
+## CU-24: Radicar solicitud formalmente
+
+*[Insertar Figura 3 aquí]*
+
+> **Nota:** El título interno de la imagen dice «CU-01»; el código vigente del caso de uso es `CU-24`, igual que en la matriz de trazabilidad.
+
+### Tabla 141. Especificación del caso de uso CU-24 Radicar solicitud formalmente
+
+| Elemento | Descripción / Valor | Procedencia |
+| :--- | :--- | :--- |
+| **Caso de Uso** | `CU-24` Radicar solicitud formalmente | — |
+| **Actor** | Solicitante | El rol de la HU-24 |
+| **Precondición** | El solicitante ha iniciado sesión y tiene una solicitud propia en estado `BORRADOR`. | Antecedentes de la HU-24 |
+| **Flujo básico · Paso 1** | 1. El solicitante selecciona su solicitud en `BORRADOR` y presiona «Radicar Solicitud». / El sistema recibe la orden de radicación. | El «Cuando» del CA-1 |
+| **Flujo básico · Paso 2** | 2. — / El sistema verifica que la información obligatoria (asunto y descripción) esté completa. | Prepara la validación que exige el CA-2 de rechazo |
+| **Flujo básico · Paso 3** | 3. — / El sistema verifica que el tipo de solicitud elegido esté activo («include» Validar tipo de solicitud activo, RN-16). | Prepara la validación de RN-16 (catálogo de tipos) |
+| **Flujo básico · Paso 4** | 4. — / El sistema asigna la fecha y hora actuales a `fecha_radicacion`, que queda inalterable (RN-14). | ES el CA-1 (RN-14) |
+| **Flujo básico · Paso 5** | 5. — / El sistema cambia el estado de la solicitud a `PENDIENTE` («include» Cambiar estado de solicitud) y registra en la bitácora el estado previo, el nuevo y el usuario responsable (RN-15). | ES el CA-1 (RN-15) |
+| **Flujo básico · Paso 6** | 6. — / El sistema genera un código único de radicado institucional. | ES el CA-1 |
+| **Flujo básico · Paso 7** | 7. — / El sistema informa «Solicitud radicada con éxito bajo el código RAD-2026-105.» | ES el CA-1 hecho paso final (RF-24) |
+| **Flujo alternativo 2a** | 2a. Falta información obligatoria (por ejemplo, la descripción está vacía): el sistema no radica, mantiene el estado `BORRADOR` y `fecha_radicacion` en `NULL`, y resalta el campo con el mensaje «La descripción es obligatoria para poder radicar la solicitud.» Vuelve al paso 1. | ES el CA-2 de la HU-24 |
+| **Flujo alternativo 3a** | 3a. El tipo de solicitud está inactivo (`activo = false`): el sistema no radica, mantiene el estado `BORRADOR` y pide seleccionar un tipo activo. Vuelve al paso 1. (Valida la RN-16) | RN-16 (HU-21 CA-2) |
+| **Poscondición** | La solicitud queda radicada, con fecha de radicación inalterable, estado `PENDIENTE` y código de radicado, y la transición queda registrada en la bitácora. Queda disponible para su evaluación (`CU-27`). Si la radicación se rechaza, la solicitud sigue en `BORRADOR` sin fecha de radicación. | CA-1 y CA-2 de la HU-24, RN-14 y RN-15 |
+
+* **Justificación:** Es la puerta de entrada y reemplaza el WhatsApp y el correo, que son el problema original. Sella la fecha de radicación inalterable (RN-14). Si falla, ninguna solicitud entra al flujo formal.
 
 ---
 
-# CU-03 — Consultar Historial de Solicitudes
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-03 |
-| **Nombre** | Consultar Historial de Solicitudes |
-| **HU Relacionada** | HU-03 |
-| **Actor(es)** | ACT-01, ACT-06 |
-| **Descripción** | Mostrar el listado de solicitudes enviadas y bloquear modificaciones si ya tienen respuesta. |
-| **Precondiciones** | El usuario debe estar autenticado. |
-| **Postcondiciones** | Éxito: Visualización segura sin alterar datos históricos.<br>Fallo: Se muestran solicitudes ajenas o se permite editar casos cerrados. |
+## CU-27: Aprobar solicitud
+
+*[Insertar Figura 4 aquí]*
+
+### Tabla 142. Especificación del caso de uso CU-27 Aprobar solicitud
+
+| Elemento | Descripción / Valor | Procedencia |
+| :--- | :--- | :--- |
+| **Caso de Uso** | `CU-27` Aprobar solicitud | — |
+| **Actor** | Gerente (el Gerente hereda las funciones del Aprobador) | El rol de la HU-28 |
+| **Precondición** | El aprobador ha iniciado sesión con rol Aprobador o Gerente y existe una solicitud en estado `PENDIENTE` radicada por otro usuario. | Antecedentes de la HU-28 y RN-05 |
+| **Flujo básico · Paso 1** | 1. El aprobador consulta las solicitudes `PENDIENTES` y selecciona una. / El sistema presenta la información de la solicitud. | Antecedentes de la HU-28 |
+| **Flujo básico · Paso 2** | 2. El aprobador selecciona la opción Aprobar e ingresa un comentario. / El sistema recibe el dictamen. | El «Cuando» del CA-1 |
+| **Flujo básico · Paso 3** | 3. — / El sistema verifica que el aprobador no sea el mismo usuario que radicó la solicitud («include» Validar conflicto de interés, RN-05). | Prepara la validación que exige el CA-2 de rechazo |
+| **Flujo básico · Paso 4** | 4. — / El sistema registra la decisión «Aprobado» con su comentario y fecha en `aprobacion_solicitud`. | ES el CA-1 |
+| **Flujo básico · Paso 5** | 5. — / El sistema cambia el estado de la solicitud a `APROBADA` y registra la transición en la bitácora (RN-15). | ES el CA-1 (RN-15) |
+| **Flujo básico · Paso 6** | 6. — / El sistema informa «La solicitud ha sido aprobada exitosamente.» | ES el CA-1 hecho paso final (RF-28) |
+| **Flujo alternativo 2a** | 2a. El aprobador elige Rechazar en lugar de Aprobar e ingresa una justificación: tras validar el paso 3, el sistema registra la decisión «Rechazado» con la justificación, cambia el estado a `RECHAZADA` y notifica al solicitante. Fin del caso de uso. | CA-1 de la HU-29 (RF-29) |
+| **Flujo alternativo 2b** | 2b. El aprobador elige Devolver para ajustes e ingresa observaciones: tras validar el paso 3, el sistema registra la decisión «Devuelto_Para_Ajustes», cambia el estado a `PENDIENTE_AJUSTES` y habilita de nuevo la edición para el solicitante. Fin del caso de uso. | CA-1 de la HU-30 (RF-30) |
+| **Flujo alternativo 2c** | 2c. El aprobador intenta rechazar o devolver sin comentario: el sistema no registra la decisión, exige la justificación u observaciones y la solicitud permanece `PENDIENTE`. Vuelve al paso 2. (Valida la RN-06) | ES el CA-2 de la HU-29 y el CA-2 de la HU-30 (RN-06) |
+| **Flujo alternativo 3a** | 3a. El aprobador es el mismo usuario solicitante: el disparador `trg_validar_aprobador` aborta la operación, el sistema muestra «Conflicto de interés: El aprobador no puede ser el mismo usuario solicitante.» y la solicitud permanece `PENDIENTE`. Fin del caso de uso. (Valida la RN-05) | ES el CA-2 de la HU-28 (RN-05) |
+| **Poscondición** | La decisión queda registrada. En el flujo básico, la solicitud pasa a `APROBADA` y queda disponible para asignarle un gestor (`CU-33`). En los flujos alternativos, la solicitud queda `RECHAZADA` o `PENDIENTE_AJUSTES`, o sigue `PENDIENTE` si el dictamen se bloquea. | CA-1 de la HU-28, HU-29 y HU-30, RN-05, RN-06 y RN-15 |
+
+* **Justificación:** Es el punto de control. Protege contra la autoaprobación (RN-05) y exige justificación al rechazar o devolver (RN-06). Sin eso, cualquiera podría aprobar sus propias solicitudes.
 
 ---
 
-# CU-04 — Buscar Solicitudes Avanzada
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-04 |
-| **Nombre** | Buscar Solicitudes Avanzada |
-| **HU Relacionada** | HU-18 |
-| **Actor(es)** | ACT-01, ACT-02 |
-| **Descripción** | Filtrar solicitudes en tiempo real por palabra clave, radicado, estado o fechas. |
-| **Precondiciones** | Estar en una pantalla con listado de solicitudes. |
-| **Postcondiciones** | Éxito: Se reduce el listado visible.<br>Fallo: El motor se congela o rompe filtros de seguridad. |
+## CU-33: Asignar gestor a la solicitud
+
+*[Insertar Figura 5 aquí]*
+
+### Tabla 143. Especificación del caso de uso CU-33 Asignar gestor a la solicitud
+
+| Elemento | Descripción / Valor | Procedencia |
+| :--- | :--- | :--- |
+| **Caso de Uso** | `CU-33` Asignar gestor a la solicitud | — |
+| **Actor** | Gerente | El rol de la HU-32 |
+| **Precondición** | El gerente ha iniciado sesión, la solicitud está en estado `APROBADA` y existe al menos un gestor activo en el sistema. | Antecedentes de la HU-32 |
+| **Flujo básico · Paso 1** | 1. El gerente consulta las solicitudes `APROBADAS` y selecciona una. / El sistema presenta la solicitud y los gestores activos disponibles. | Antecedentes de la HU-32 |
+| **Flujo básico · Paso 2** | 2. El gerente selecciona un gestor y define el nivel de prioridad (Baja, Media, Alta o Crítica). / El sistema recibe la asignación. | El «Cuando» del CA-1 |
+| **Flujo básico · Paso 3** | 3. — / El sistema verifica que la solicitud no tenga una gestión activa en estado `En_Proceso` («include» Validar gestión única activa, RN-11). | Prepara la validación que exige el CA-2 de rechazo |
+| **Flujo básico · Paso 4** | 4. — / El sistema crea el registro en `gestion_solicitud` con `estado_gestion` `En_Proceso` y guarda la fecha y hora actuales en `fecha_vinculacion`. | ES el CA-1 |
+| **Flujo básico · Paso 5** | 5. — / El sistema cambia el estado de la solicitud a `EN_GESTION` y registra la transición en la bitácora (RN-15). | ES el CA-1 (RN-15) |
+| **Flujo básico · Paso 6** | 6. — / El sistema informa «Gestor [nombre] asignado correctamente a la solicitud.» | ES el CA-1 hecho paso final (RF-32) |
+| **Flujo alternativo 3a** | 3a. La solicitud ya tiene una gestión `En_Proceso`: el disparador `trg_gestion_unica_activa` detiene la operación, el sistema muestra «Error: La solicitud ya posee una gestión activa en proceso.» y la gestión existente no se modifica. Para cambiar de gestor debe usarse la reasignación (`HU-33`). Fin del caso de uso. (Valida la RN-11) | ES el CA-2 de la HU-32 (RN-11) |
+| **Poscondición** | La solicitud queda asignada a un gestor, con su prioridad, una única gestión activa en estado `En_Proceso`, fecha de vinculación y estado `EN_GESTION`. | CA-1 de la HU-32, RN-11 y RN-15 |
+
+* **Justificación:** Es el puente entre aprobar y ejecutar. Garantiza una sola gestión activa por solicitud (RN-11), así no hay doble atención ni responsabilidad difusa.
 
 ---
 
-# CU-05 — Evaluar y Responder Solicitud
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-05 |
-| **Nombre** | Evaluar y Responder Solicitud |
-| **HU Relacionada** | HU-04, HU-05, HU-06, HU-07 |
-| **Actor(es)** | ACT-02, ACT-03, ACT-05, ACT-06 |
-| **Descripción** | Permitir aprobar o rechazar una solicitud, exigiendo motivo obligatorio si es negativa. |
-| **Precondiciones** | El revisor debe tener permisos de aprobación. |
-| **Postcondiciones** | Éxito: El caso cambia de estado con firma y notificación.<br>Fallo: Se cierra sin comentarios obligatorios. |
+## CU-36: Finalizar gestión de la solicitud
 
----
+*[Insertar Figura 6 aquí]*
 
-# CU-06 — Priorizar Bandeja de Entrada
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-06 |
-| **Nombre** | Priorizar Bandeja de Entrada |
-| **HU Relacionada** | HU-12 |
-| **Actor(es)** | ACT-02 |
-| **Descripción** | Organizar automáticamente la bandeja priorizando casos urgentes y antiguos. |
-| **Precondiciones** | El jefe debe ingresar a su pantalla principal. |
-| **Postcondiciones** | Éxito: Bandeja organizada por urgencia y orden de llegada.<br>Fallo: Solicitudes desorganizadas. |
+### Tabla 144. Especificación del caso de uso CU-36 Finalizar gestión de la solicitud
 
----
+| Elemento | Descripción / Valor | Procedencia |
+| :--- | :--- | :--- |
+| **Caso de Uso** | `CU-36` Finalizar gestión de la solicitud | — |
+| **Actor** | Gestor / Personal de Gestión | El rol de la HU-35 |
+| **Precondición** | El gestor ha iniciado sesión, la solicitud está en estado `EN_GESTION` y existe una gestión a su cargo en estado `En_Proceso`. | Antecedentes de la HU-35 |
+| **Flujo básico · Paso 1** | 1. El gestor consulta sus solicitudes asignadas y selecciona la gestión que desea cerrar. / El sistema presenta la información de la gestión. | Antecedentes de la HU-35 |
+| **Flujo básico · Paso 2** | 2. El gestor ejecuta la acción Finalizar. / El sistema recibe la orden y toma la fecha y hora actuales como fecha de cierre. | El «Cuando» del CA-1 |
+| **Flujo básico · Paso 3** | 3. — / El sistema verifica que `fecha_cierre` sea igual o posterior a `fecha_vinculacion` («include» Validar fecha de cierre, RN-12; restricciones `chk_gestion_cierre` y `chk_gestion_fechas`). | Prepara la validación que exige el CA-2 de rechazo |
+| **Flujo básico · Paso 4** | 4. — / El sistema cambia el estado de la gestión a `Finalizado` y registra la `fecha_cierre`. | ES el CA-1 |
+| **Flujo básico · Paso 5** | 5. — / El sistema cambia el estado de la solicitud a `SOLUCIONADO` y registra la transición en la bitácora (RN-15). | ES el CA-1 (RN-15) |
+| **Flujo básico · Paso 6** | 6. — / El sistema informa «Gestión de la solicitud finalizada correctamente.» | ES el CA-1 hecho paso final (RF-35) |
+| **Flujo alternativo 3a** | 3a. La fecha de cierre es anterior a la fecha de vinculación: la restricción `chk_gestion_fechas` aborta la transacción, el sistema muestra «La fecha de cierre no puede ser anterior a la fecha de vinculación del gestor.» y la gestión se mantiene `En_Proceso`. (Valida la RN-12) | ES el CA-2 de la HU-35 (RN-12) |
+| **Poscondición** | La gestión queda en estado `Finalizado` con `fecha_cierre` registrada, la solicitud pasa a `SOLUCIONADO` (estado terminal) y la transición queda registrada en la bitácora. Queda habilitada la evaluación del servicio (RN-13). Si el cierre se rechaza, la gestión sigue `En_Proceso`. | CA-1 y CA-2 de la HU-35, RN-12, RN-13 y RN-15 |
 
-# CU-07 — Configurar Delegación Temporal
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-07 |
-| **Nombre** | Configurar Delegación Temporal |
-| **HU Relacionada** | HU-09 |
-| **Actor(es)** | ACT-02 (Gerente General) |
-| **Descripción** | Delegar permisos de aprobación a un coordinador con fechas de inicio y fin. |
-| **Precondiciones** | Usuario autenticado con rol de Gerente General. |
-| **Postcondiciones** | Éxito: Accesos del coordinador activados por el plazo configurado.<br>Fallo: Delegación queda abierta indefinidamente. |
-
----
-
-# CU-08 — Confirmar Cierre y Calificar Servicio
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-08 |
-| **Nombre** | Confirmar Cierre y Calificar Servicio |
-| **HU Relacionada** | HU-21 |
-| **Actor(es)** | ACT-01, ACT-06 |
-| **Descripción** | Recibir conformidad del empleado o aplicar cierre automático tras 5 días. |
-| **Precondiciones** | La solicitud debe estar en estado “Solucionado”. |
-| **Postcondiciones** | Éxito: Caso cerrado con calificación.<br>Fallo: Caso queda abierto afectando reportes. |
-
----
-
-# CU-09 — Autenticar Usuario y Controlar Sesión
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-09 |
-| **Nombre** | Autenticar Usuario y Controlar Sesión |
-| **HU Relacionada** | HU-17 |
-| **Actor(es)** | ACT-04 |
-| **Descripción** | Validar acceso, bloquear intentos fallidos y cerrar sesión por inactividad. |
-| **Precondiciones** | El usuario debe cargar la URL de la plataforma. |
-| **Postcondiciones** | Éxito: Acceso seguro con expiración automática.<br>Fallo: Intentos infinitos permiten vulnerabilidades. |
-
----
-
-# CU-10 — Consultar Log de Auditoría
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-10 |
-| **Nombre** | Consultar Log de Auditoría |
-| **HU Relacionada** | HU-20 |
-| **Actor(es)** | ACT-04, ACT-06 |
-| **Descripción** | Dar acceso exclusivo al Administrador para revisar la bitácora técnica. |
-| **Precondiciones** | Usuario con rol exclusivo de Administrador. |
-| **Postcondiciones** | Éxito: Inspección completa del historial técnico.<br>Fallo: Exposición de datos sensibles. |
-
----
-
-# CU-11 — Recuperar Contraseña de Usuario
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-11 |
-| **Nombre** | Recuperar Contraseña de Usuario |
-| **HU Relacionada** | HU-22 |
-| **Actor(es)** | ACT-01, ACT-02, ACT-05 |
-| **Descripción** | Restablecer la clave mediante enlace temporal enviado al correo corporativo. |
-| **Precondiciones** | Estar en la pantalla de Login y no recordar la clave. |
-| **Postcondiciones** | Éxito: Usuario recibe enlace seguro.<br>Fallo: Envío inseguro o a correos externos. |
-
----
-
-# CU-12 — Generar y Descargar Reporte PDF
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-12 |
-| **Nombre** | Generar y Descargar Reporte PDF |
-| **HU Relacionada** | HU-15 |
-| **Actor(es)** | ACT-01, ACT-02, ACT-06 |
-| **Descripción** | Descargar un PDF con código QR como evidencia física e inalterable. |
-| **Precondiciones** | Solicitud en estado final aprobado. |
-| **Postcondiciones** | Éxito: PDF validable con QR.<br>Fallo: PDF incompleto o sin QR. |
-
----
-
-# CU-13 — Visualizar Métricas en Dashboard Directivo
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-13 |
-| **Nombre** | Visualizar Métricas en Dashboard Directivo |
-| **HU Relacionada** | HU-19 |
-| **Actor(es)** | ACT-02 |
-| **Descripción** | Mostrar panel de gráficas con métricas en tiempo real. |
-| **Precondiciones** | Autenticación con rol directivo. |
-| **Postcondiciones** | Éxito: Información clara para decisiones.<br>Fallo: Datos mezclados o expuestos a roles no autorizados. |
-
----
-
-# CU-14 — Revelar Identidad en Quejas Anónimas
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-14 |
-| **Nombre** | Revelar Identidad en Quejas Anónimas |
-| **HU Relacionada** | HU-10 |
-| **Actor(es)** | ACT-02 (Gerente General), ACT-06 |
-| **Descripción** | Permitir levantar el anonimato bajo causa mayor con registro obligatorio. |
-| **Precondiciones** | Solicitud clasificada como “Queja Anónima”. |
-| **Postcondiciones** | Éxito: Identidad revelada con traza imborrable.<br>Fallo: Acceso indebido sin justificación. |
-
----
-
-# CU-15 — Exportar Bitácora de Auditoría
-| **Campo** | **Descripción** |
-|-----------|------------------|
-| **ID** | CU-15 |
-| **Nombre** | Exportar Bitácora de Auditoría |
-| **HU Relacionada** | HU-20 |
-| **Actor(es)** | ACT-04 |
-| **Descripción** | Descargar registros técnicos del sistema para auditorías externas. |
-| **Precondiciones** | Estar en pantalla del Log con rol de Administrador. |
-| **Postcondiciones** | Éxito: Copia física legal del rastro técnico.<br>Fallo: Alteración o edición del log antes de exportar. |
-
-
-
-
+* **Justificación:** Cierra el ciclo y habilita la calificación del servicio (RN-13). Valida que la fecha de cierre no sea anterior a la de vinculación (RN-12), lo que mantiene confiables los tiempos de atención y los reportes.
