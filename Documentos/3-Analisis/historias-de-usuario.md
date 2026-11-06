@@ -276,3 +276,308 @@
 | **Origen de la necesidad** | Pregunta 5 del formulario, Mantenimiento de catálogo de estados y método actualizar(id_estado_solicitud) de la clase estado_solicitud. |
 | **RF derivados** | RF-20 |
 | **Prioridad** | Baja |
+
+## Entidad solicitud
+
+### Crear borrador de solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-21 |
+| **Título corto** | Crear borrador de solicitud |
+| **Historia** | Como Solicitante, quiero crear una solicitud inicial en borrador, para completar el asunto y la descripción antes de su envío formal. |
+| **Criterios de aceptación** | Antecedentes:<br>  # Se cumple antes de CADA escenario de esta historia<br>  Dado que la usuaria Solicitante "Marta Pérez" con id_usuario 10 ha iniciado sesión en la plataforma<br>Escenario: CA-1 Creación exitosa de solicitud en estado borrador<br>  # crear() en Solicitud · asigna estado 'BORRADOR' y fecha_radicacion = NULL<br>  Cuando Marta crea un nuevo borrador con los siguientes datos:<br>    \| asunto \| Requerimiento de nuevo equipo portátil \|<br>    \| descripcion \| Se solicita laptop de alta gama para desarrollo \|<br>    \| id_tipo \| 1 (Solicitud de Equipos) \|<br>  Entonces el sistema registra la solicitud asignando automáticamente el id_solicitante 10<br>  Y establece el estado_solicitud en "BORRADOR"<br>  Y deja el campo fecha_radicacion en valor nulo (NULL)<br>  Y muestra el mensaje "Borrador de solicitud guardado correctamente."<br>Escenario: CA-2 Rechazo por creación de borrador con tipo de solicitud inactivo<br>  Dado que el id_tipo 4 ("Licencias de Software") está con el atributo activo = false<br>  Cuando Marta intenta guardar un borrador seleccionando el tipo de solicitud id_tipo 4<br>  Entonces el sistema impide el registro del borrador<br>  Y muestra el mensaje "El tipo de solicitud seleccionado no se encuentra activo."<br>Escenario: CA-3 Creación de borrador sin ingresar asunto ni descripción<br>  # El borrador permite campos iniciales vacíos antes del envío formal<br>  Cuando Marta crea un borrador dejando el asunto y la descripción vacíos<br>  Entonces el sistema guarda la solicitud en estado "BORRADOR"<br>  Y asigna el identificador de solicitud<br>  Y muestra el aviso "Borrador guardado sin contenido. Recuerde completarlo antes de radicar." |
+| **Origen de la necesidad** | Pregunta 7 del formulario, Regla RN-16 (Restricción de selección en tipos inactivos) y método crear() de la clase Solicitud. |
+| **RF derivados** | RF-21 |
+| **Prioridad** | Alta |
+
+---
+
+### Consultar expediente de solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-22 |
+| **Título corto** | Consultar expediente de solicitud |
+| **Historia** | Como Usuario, quiero consultar los datos de una solicitud por su identificador, para visualizar sus atributos y estado. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que el usuario autenticado "Carlos Restrepo" ingresa a la consulta de expedientes<br>Escenario: CA-1 Consulta exitosa de expediente estándar<br>  # consultar(id_solicitud)<br>  Dado que existe la solicitud con id_solicitud 105, asunto "Compra de insumos", descripción "Resaltadores y carpetas", id_tipo 1, estado "PENDIENTE", fecha_radicacion "2026-03-01", anonimo_bloqueado = false y solicitante "Marta Pérez"<br>  Cuando Carlos busca la solicitud con id_solicitud 105<br>  Entonces el sistema presenta la ficha completa de la solicitud:<br>    \| id_solicitud \| 105 \|<br>    \| asunto \| Compra de insumos \|<br>    \| descripcion \| Resaltadores y carpetas\|<br>    \| tipo_solicitud \| Solicitud de Equipos \|<br>    \| estado \| PENDIENTE \|<br>    \| fecha_radicacion \| 2026-03-01 \|<br>    \| solicitante \| Marta Pérez \|<br>Escenario: CA-2 Consulta de solicitud anónima con identidad protegida<br>  # Protección de identidad por anonimo_bloqueado = TRUE<br>  Dado que existe la solicitud id_solicitud 108 con anonimo_bloqueado = true y solicitante original "Diego Rojas"<br>  Cuando Carlos consulta la solicitud id_solicitud 108<br>  Entonces el sistema despliega el asunto, descripción, tipo, estado y fechas<br>  Pero oculta la identidad del solicitante mostrando la etiqueta "SOLICITANTE ANÓNIMO"<br>Escenario: CA-3 Búsqueda de expediente inexistente<br>  Dado que no existe ninguna solicitud con id_solicitud 9999<br>  Cuando Carlos busca el id_solicitud 9999<br>  Entonces el sistema no muestra expediente<br>  Y emite la alerta "No se encontró ninguna solicitud asociada al código 9999." |
+| **Origen de la necesidad** | Pregunta 14 y 21 del formulario y método consultar(id_solicitud) de la clase Solicitud. |
+| **RF derivados** | RF-22 |
+| **Prioridad** | Alta |
+
+---
+
+### Actualizar contenido de solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-23 |
+| **Título corto** | Actualizar contenido de solicitud |
+| **Historia** | Como Solicitante, quiero actualizar el asunto o descripción de una solicitud en borrador o devuelta para ajustes, para corregir la información. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que la usuaria "Marta Pérez" ha iniciado sesión en la plataforma<br>Escenario: CA-1 Edición exitosa de solicitud en borrador o devuelta para ajustes<br>  # actualizar(id_solicitud) · registra fecha_actualizacion<br>  Dado que Marta tiene la solicitud id_solicitud 105 en estado "BORRADOR" o "PENDIENTE_AJUSTES"<br>  Cuando modifica el asunto a "Compra de 2 Laptops de Desarrollo" y la descripción a "Ajuste de especificaciones de memoria RAM"<br>  Entonces el sistema actualiza los datos de la solicitud id_solicitud 105<br>  Y asigna la fecha y hora actual en fecha_actualizacion<br>  Y muestra el mensaje "Solicitud actualizada correctamente."<br>Escenario: CA-2 Rechazo por intento de edición en estados no permitidos<br>  # Restricción de estado para edición<br>  Dado que la solicitud id_solicitud 102 de Marta se encuentra en estado "PENDIENTE", "APROBADA" o "RECHAZADA"<br>  Cuando Marta intenta modificar el asunto o la descripción de la solicitud id_solicitud 102<br>  Entonces el sistema bloquea los campos del formulario<br>  Y muestra el aviso "La solicitud no se puede modificar porque se encuentra en trámite o cerrada." |
+| **Origen de la necesidad** | Pregunta 16 del formulario y método actualizar(id_solicitud) de la clase Solicitud. |
+| **RF derivados** | RF-23 |
+| **Prioridad** | Alta |
+
+---
+
+### Radicar solicitud formalmente
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-24 |
+| **Título corto** | Radicar solicitud formalmente |
+| **Historia** | Como Solicitante, quiero radicar formalmente una solicitud, para iniciar el flujo institucional de revisión. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que la usuaria "Marta Pérez" ha iniciado sesión en la plataforma<br>Escenario: CA-1 Radicación formal exitosa con información completa<br>  # radicar() · fecha_radicacion inalterable (RN-14) y cambia a estado 'PENDIENTE'<br>  Dado que Marta tiene la solicitud id_solicitud 105 en estado "BORRADOR" con asunto "Compra de Laptops" y descripción "Especificación de hardware completa"<br>  Cuando Marta presiona el botón "Radicar Solicitud"<br>  Entonces el sistema asigna la fecha y hora actual inalterable a fecha_radicacion<br>  Y cambia el estado_solicitud a "PENDIENTE"<br>  Y genera un código único de radicado institucional<br>  Y muestra el mensaje "Solicitud radicada con éxito bajo el código RAD-2026-105."<br>Escenario: CA-2 Rechazo de radicación por información incompleta<br>  Dado que la solicitud id_solicitud 106 en estado "BORRADOR" tiene el asunto "Compra" pero la descripción está vacía<br>  Cuando Marta intenta radicar la solicitud id_solicitud 106<br>  Entonces el sistema no efectúa la radicación<br>  Y mantiene el estado en "BORRADOR" y fecha_radicacion en NULL<br>  Y resalta el campo indicando "La descripción es obligatoria para poder radicar la solicitud." |
+| **Origen de la necesidad** | Pregunta 21 del formulario, Regla RN-14 y método radicar() de la clase Solicitud. |
+| **RF derivados** | RF-24 |
+| **Prioridad** | Alta |
+
+---
+
+### Cambiar estado de la solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-25 |
+| **Título corto** | Cambiar estado de la solicitud |
+| **Historia** | Como Gerente, quiero cambiar el estado de una solicitud en el flujo, para reflejar el progreso del trámite. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que existe la solicitud id_solicitud 105 radicada en el sistema en estado "PENDIENTE"<br>Escenario: CA-1 Transición exitosa de estado con registro en bitácora de auditoría<br>  # cambiarEstado(nuevoEstado) · registro obligatorio en bitácora por RN-15<br>  Cuando el sistema invoca cambiarEstado("APROBADA") para la solicitud id_solicitud 105<br>  Entonces la solicitud id_solicitud 105 actualiza su estado a "APROBADA"<br>  Y el sistema inserta automáticamente un registro en la bitácora de auditoría detallando:<br>    \| id_solicitud \| 105 \|<br>    \| estado_previo\| PENDIENTE \|<br>    \| estado_nuevo \| APROBADA \|<br>    \| fecha_cambio \| Fecha/Hora actual \|<br>Escenario: CA-2 Error por intento de transición de estado no válida<br>  Dado que la solicitud id_solicitud 110 se encuentra en estado terminal "RECHAZADA"<br>  Cuando el sistema intenta cambiar el estado a "PENDIENTE"<br>  Entonces el sistema aborta la transacción<br>  Y emite la excepción "Transición de estado no permitida desde un estado terminal."<br>  Y el estado permanece en "RECHAZADA" sin alterar la bitácora |
+| **Origen de la necesidad** | Pregunta 6 del formulario, Regla RN-15 y método cambiarEstado(nuevoEstado) de la clase Solicitud. |
+| **RF derivados** | RF-25 |
+| **Prioridad** | Alta |
+
+---
+
+### Desblindar identidad de solicitud anónima
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-26 |
+| **Título corto** | Desblindar identidad de solicitud anónima |
+| **Historia** | Como Administrador, quiero desblindar la identidad del solicitante anónimo mediante autorización, para resolver investigaciones de auditoría. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que existe la solicitud id_solicitud 108 con anonimo_bloqueado = true perteneciente originalmente al usuario id_usuario 12 "Diego Rojas"<br>Escenario: CA-1 Desblindaje exitoso por usuario autorizado con registro de auditoría<br>  # desblindarIdentidad(id_usuario) · Auditoría por RN-04<br>  Dado que el Gerente "Álvaro Tamayo" ha iniciado sesión con permisos de seguridad<br>  Cuando Álvaro ejecuta la función desblindarIdentidad para el id_solicitud 108<br>  Entonces el sistema muestra en pantalla la identidad del solicitante: "Diego Rojas (diego.rojas@nexaservicios.com)"<br>  Y genera inmediatamente un registro no borrable en la bitácora de auditoría indicando:<br>    \| id_solicitud \| 108 \|<br>    \| usuario_ejecutor \| Álvaro Tamayo \|<br>    \| accion \| DESBLINDAJE_IDENTIDAD\|<br>    \| fecha_desblindaje \| Fecha/Hora actual \|<br>Escenario: CA-2 Rechazo de desblindaje por falta de permisos de rol<br>  Dado que el Aprobador "Rebeca López" sin rol de Gerente o Administrador intenta desblindar la solicitud id_solicitud 108<br>  Cuando Rebeca solicita la revelación de la identidad<br>  Entonces el sistema bloquea la acción<br>  Y muestra la alerta "No cuenta con los privilegios requeridos para desblindar identidades protegidas."<br>  Y la identidad del solicitante permanece oculta |
+| **Origen de la necesidad** | Pregunta 14 del formulario, Regla RN-04 y método desblindarIdentidad(id_usuario) de la clase Solicitud. |
+| **RF derivados** | RF-26 |
+| **Prioridad** | Media |
+
+---
+
+### Inactivar solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-27 |
+| **Título corto** | Inactivar solicitud |
+| **Historia** | Como Administrador, quiero inactivar una solicitud existente mediante su identificador, para asegurar la baja lógica del registro dentro del sistema. |
+| **Criterios de aceptación** | Antecedentes:<br>• Dado que existe la solicitud con id_solicitud 108 en estado activo.<br>Escenario: CA-1 Inactivación exitosa por usuario administrador<br>• Dado que el Administrador "Carlos Restrepo" ha iniciado sesión con permisos de seguridad.<br>• Cuando Carlos ejecuta la función inactivar(id_solicitud) para el id_solicitud 108.<br>• Entonces el sistema procesa la baja lógica cambiando su estado a inactivo y devuelve un valor true.<br>• Y genera inmediatamente un registro en la bitácora de auditoría indicando la acción correspondiente.<br>Escenario: CA-2 Rechazo de inactivación por falta de permisos o registro inexistente<br>• Dado que un usuario sin rol de Administrador intenta inactivar la solicitud o el id_solicitud no se encuentra registrado.<br>• Cuando se ejecuta la función inactivar(id_solicitud).<br>• Entonces el sistema bloquea la acción, retorna false y muestra la alerta "No cuenta con los privilegios requeridos o la solicitud no existe". |
+| **Origen de la necesidad** | Pregunta 15 del formulario, Requerimiento operativo del sistema y método inactivar(id_solicitud: int): boolean de la clase Solicitud. |
+| **RF derivados** | RF-27 |
+| **Prioridad** | Media |
+
+## Entidad aprobacion_solicitud
+
+### Aprobar solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-28 |
+| **Título corto** | Aprobar solicitud |
+| **Historia** | Como Gerente, quiero dictaminar la aprobación de una solicitud pendiente, para permitir el paso a la fase de gestión. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que la Aprobadora "Rebeca López" con id_usuario 5 ha iniciado sesión<br>  Y que existe la solicitud id_solicitud 105 radicada por "Marta Pérez" (id_usuario 10) en estado "PENDIENTE"<br>Escenario: CA-1 Aprobación exitosa por un evaluador válido<br>  # aprobar() en aprobacion_solicitud · registra 'Aprobado' y cambia estado a 'APROBADA'<br>  Cuando Rebeca dictamina la aprobación de la solicitud id_solicitud 105 con el comentario "Aprobado según presupuesto disponible"<br>  Entonces el sistema registra la decisión 'Aprobado' en la tabla aprobacion_solicitud<br>  Y actualiza la solicitud id_solicitud 105 al estado "APROBADA"<br>  Y muestra el mensaje "La solicitud ha sido aprobada exitosamente."<br>Escenario: CA-2 Rechazo de aprobación por ser el mismo solicitante<br>  # Disparador trg_validar_aprobador bloquea por RN-05<br>  Dado que el usuario "Marta Pérez" (id_usuario 10) tiene rol de Aprobador y es la solicitante de la id_solicitud 105<br>  Cuando Marta intenta dictaminar la aprobación de su propia solicitud id_solicitud 105<br>  Entonces el disparador trg_validar_aprobador aborta la operación<br>  Y el sistema muestra el mensaje de error "Conflicto de interés: El aprobador no puede ser el mismo usuario solicitante."<br>  Y la solicitud id_solicitud 105 permanece en estado "PENDIENTE" |
+| **Origen de la necesidad** | Pregunta 11 del formulario, Regla RN-05 y método aprobar() de la clase aprobacion_solicitud. |
+| **RF derivados** | RF-28 |
+| **Prioridad** | Alta |
+
+---
+
+### Rechazar solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-29 |
+| **Título corto** | Rechazar solicitud |
+| **Historia** | Como Gerente, quiero rechazar una solicitud ingresando una justificación obligatoria, para finalizar negativamente el trámite. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que la Aprobadora "Rebeca López" ha iniciado sesión<br>  Y que existe la solicitud id_solicitud 105 en estado "PENDIENTE"<br>Escenario: CA-1 Rechazo exitoso con justificación<br>  # rechazar(comentario) · registra 'Rechazado' y pasa a estado 'RECHAZADA'<br>  Cuando Rebeca rechaza la solicitud id_solicitud 105 ingresando el comentario "No hay disponibilidad presupuestal en el periodo actual"<br>  Entonces el sistema guarda la decisión 'Rechazado' junto con la justificación<br>  Y actualiza el estado de la solicitud id_solicitud 105 a "RECHAZADA"<br>  Y notifica la decisión al solicitante<br>Escenario: CA-2 Rechazo abortado por comentario de justificación vacío<br>  # Regla chk_aprobacion_comentario (RN-06)<br>  Cuando Rebeca intenta rechazar la solicitud id_solicitud 105 dejando el campo comentario en blanco<br>  Entonces la regla chk_aprobacion_comentario detiene la operación<br>  Y el sistema muestra la advertencia "Debe ingresar una justificación obligatoria para rechazar la solicitud."<br>  Y la solicitud mantiene su estado "PENDIENTE" |
+| **Origen de la necesidad** | Pregunta 11 del formulario, Regla RN-06 y método rechazar(comentario) de la clase aprobacion_solicitud. |
+| **RF derivados** | RF-29 |
+| **Prioridad** | Alta |
+
+---
+
+### Devolver solicitud para ajustes
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-30 |
+| **Título corto** | Devolver solicitud para ajustes |
+| **Historia** | Como Gerente, quiero devolver una solicitud al solicitante con observaciones, para que sea corregida y reenviada.[cite: 9] |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que la Aprobadora "Rebeca López" ha iniciado sesión<br>  Y que existe la solicitud id_solicitud 105 en estado "PENDIENTE"<br>Escenario: CA-1 Devolución exitosa con observaciones registradas<br>  # devolverParaAjustes(comentario) · asigna 'Devuelto_Para_Ajustes' y estado 'PENDIENTE_AJUSTES'<br>  Cuando Rebeca devuelve la solicitud id_solicitud 105 adjuntando el comentario "Por favor adjuntar tres cotizaciones de proveedores"<br>  Entonces el sistema registra la decisión 'Devuelto_Para_Ajustes' con el comentario correspondiente<br>  Y cambia el estado de la solicitud a "PENDIENTE_AJUSTES"<br>  Y habilita nuevamente los permisos de edición para la usuaria solicitante<br>Escenario: CA-2 Rechazo de devolución por omisión de observaciones<br>  # Regla chk_aprobacion_comentario (RN-06)<br>  Cuando Rebeca intenta devolver la solicitud id_solicitud 105 sin ingresar ningún comentario<br>  Entonces el sistema no efectúa la devolución<br>  Y exige el diligenciamiento del campo señalando "Es obligatorio especificar las observaciones o ajustes requeridos."<br>  Y la solicitud continúa en estado "PENDIENTE" |
+| **Origen de la necesidad** | Pregunta 11 del formulario, Regla RN-06 y método devolverParaAjustes(comentario) de la clase aprobacion_solicitud. |
+| **RF derivados** | RF-30 |
+| **Prioridad** | Alta. |
+
+---
+
+### Consultar dictamen de aprobación
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-31 |
+| **Título corto** | Consultar dictamen de aprobación |
+| **Historia** | Como Usuario o Auditor, quiero consultar la información de una aprobación por su identificador, para revisar la decisión adoptada. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que el Auditor "Carlos Restrepo" ingresa a la revisión de dictámenes de solicitudes<br>Escenario: CA-1 Consulta exitosa del dictamen de evaluación<br>  # consultar(id_aprobacion)<br>  Dado que existe el registro id_aprobacion 50 con decisión "Aprobado", comentario "Cumple con los requisitos", fecha "2026-03-02 14:30:00" y aprobador "Rebeca López"<br>  Cuando Carlos consulta el dictamen con id_aprobacion 50<br>  Entonces el sistema retorna y despliega la ficha del dictamen:<br>    \| id_aprobacion \| 50 \|<br>    \| decision \| Aprobado \|<br>    \| comentario \| Cumple con los requisitos \|<br>    \| fecha_decision \| 2026-03-02 14:30:00 \|<br>    \| evaluador \| Rebeca López \|<br>Escenario: CA-2 Búsqueda de dictamen inexistente<br>  Dado que no existe ningún dictamen registrado con el id_aprobacion 999<br>  Cuando Carlos busca el id_aprobacion 999<br>  Entonces el sistema emite el mensaje "No se encontraron registros de dictamen para el identificador 999." |
+| **Origen de la necesidad** | Pregunta 15 del formulario y método consultar(id_aprobacion) de la clase aprobacion_solicitud. |
+| **RF derivados** | RF-31 |
+| **Prioridad** | Media |
+
+## Entidad gestion_solicitud
+
+### Asignar gestor a la solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-32 |
+| **Título corto** | Asignar gestor a la solicitud |
+| **Historia** | Como Gerente, quiero asignar una solicitud a un gestor con su nivel de prioridad, para dar inicio a la atención operativa. |
+| **Criterios de aceptación** | Antecedentes:<br>  # Se cumple antes de CADA escenario de esta historia<br>  Dado que el Gerente "Álvaro Tamayo" ha iniciado sesión en la plataforma<br>  Y que la solicitud id_solicitud 105 se encuentra en estado "APROBADA"<br>  Y que el gestor "Andrés Castro" con id_gestor 8 está activo en el sistema<br>Escenario: CA-1 Asignación exitosa de gestor<br>  # asignarGestor(id_gestor) · crea gestión en 'En_Proceso' y cambia solicitud a 'EN_GESTION'<br>  Dado que la solicitud id_solicitud 105 no tiene ninguna gestión activa en proceso<br>  Cuando Álvaro asigna al id_gestor 8 la atención de la id_solicitud 105 con prioridad "Alta"<br>  Entonces el sistema crea un nuevo registro en la tabla gestion_solicitud con estado_gestion = "En_Proceso"<br>  Y guarda la fecha y hora actual en fecha_vinculacion<br>  Y actualiza el estado de la solicitud id_solicitud 105 a "EN_GESTION"<br>  Y muestra el mensaje "Gestor Andrés Castro asignado correctamente a la solicitud."<br>Escenario: CA-2 Rechazo por gestión única activa (Regla RN-11)<br>  # Disparador trg_gestion_unica_activa bloquea si ya existe gestión en proceso<br>  Dado que la solicitud id_solicitud 105 ya cuenta con una gestión activa en estado "En_Proceso" asignada al id_gestor 4<br>  Cuando Álvaro intenta asignar un nuevo gestor (id_gestor 8) a la id_solicitud 105<br>  Entonces el disparador trg_gestion_unica_activa detiene la operación<br>  Y el sistema muestra el mensaje "Error: La solicitud ya posee una gestión activa en proceso."<br>  Y el registro de gestión existente no sufre modificaciones |
+| **Origen de la necesidad** | Pregunta 8 del formulario, Regla RN-11 y método asignarGestor(id_gestor) de la clase gestion_solicitud. |
+| **RF derivados** | RF-32 |
+| **Prioridad** | Alta |
+
+---
+
+### Reasignar gestor a la solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-33 |
+| **Título corto** | Reasignar gestor a la solicitud |
+| **Historia** | Como Gerente, quiero reasignar la atención de un caso a un gestor distinto, para redistribuir la carga operacional. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que el Gerente "Álvaro Tamayo" ha iniciado sesión en la plataforma<br>  Y que la solicitud id_solicitud 105 tiene una gestión activa (id_gestion 12) en estado "En_Proceso" con el gestor "Andrés Castro" (id_gestor 8)<br>Escenario: CA-1 Reasignación exitosa garantizando gestión única activa (Regla RN-11)<br>  # reasignar(id_gestor) · cambia gestión actual a 'Reasignado' e inicia nuevo registro 'En_Proceso'<br>  Cuando Álvaro reasigna la id_solicitud 105 al nuevo gestor "Beatriz Gómez" (id_gestor 15)<br>  Entonces el sistema actualiza el estado_gestion del id_gestion 12 a "Reasignado"<br>  Y asigna la fecha y hora actual en fecha_cierre para id_gestion 12<br>  Y crea un nuevo registro de gestión para id_gestor 15 con estado_gestion = "En_Proceso"<br>  Y mantiene el estado de la solicitud en "EN_GESTION"<br>  Y garantiza que exista únicamente una gestión activa en estado "En_Proceso"<br>Escenario: CA-2 Rechazo de reasignación al mismo gestor actual<br>  Cuando Álvaro intenta reasignar la id_solicitud 105 al mismo gestor actual (id_gestor 8)<br>  Entonces el sistema bloquea la transacción<br>  Y muestra la advertencia "El gestor seleccionado ya se encuentra a cargo del caso." |
+| **Origen de la necesidad** | Pregunta 8 del formulario, Gestión operativa y método reasignar(id_gestor) de la clase gestion_solicitud. |
+| **RF derivados** | RF-33 |
+| **Prioridad** | Alta |
+
+---
+
+### Actualizar prioridad de gestión
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-34 |
+| **Título corto** | Actualizar prioridad de gestión |
+| **Historia** | Como Personal de Gestión, quiero modificar la prioridad asignada a un caso ('Baja', 'Media', 'Alta', 'Critica'), para ajustar la urgencia de atención. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que el Gestor "Andrés Castro" ha iniciado sesión en la plataforma<br>  Y que existe un registro id_gestion 12 en estado "En_Proceso" con prioridad "Media"<br>Escenario: CA-1 Actualización exitosa a una prioridad válida<br>  # actualizarPrioridad(nuevaPrioridad)<br>  Cuando Andrés cambia la prioridad del id_gestion 12 a "Critica"<br>  Entonces el sistema actualiza el campo prioridad a "Critica" en la tabla gestion_solicitud<br>  Y muestra la confirmación "Prioridad de la gestión actualizada a Critica."<br>Escenario: CA-2 Rechazo por valor no perteneciente a la enumeración PrioridadGestion<br>  # Los valores permitidos son estrictamente: 'Baja', 'Media', 'Alta', 'Critica'<br>  Cuando Andrés intenta asignar el valor de prioridad "Urgente" al id_gestion 12<br>  Entonces el sistema rechaza el parámetro<br>  Y emite un error de validación: "La prioridad 'Urgente' no es válida. Debe seleccionar: Baja, Media, Alta o Critica."<br>  Y el campo prioridad conserva el valor "Media" |
+| **Origen de la necesidad** | Pregunta 8 del formulario y método actualizarPrioridad(nuevaPrioridad: PrioridadGestion) de la clase gestion_solicitud. |
+| **RF derivados** | RF-34 |
+| **Prioridad** | Media |
+
+---
+
+### Finalizar gestión de la solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-35 |
+| **Título corto** | Finalizar gestión de la solicitud |
+| **Historia** | Como Personal de Gestión, quiero marcar la atención como finalizada, para concluir el trabajo operativo sobre la solicitud. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que el Gestor "Andrés Castro" ha iniciado sesión en la plataforma<br>  Y que la id_solicitud 105 está en "EN_GESTION" con id_gestion 12 activo en "En_Proceso" desde fecha_vinculacion "2026-03-01 08:00:00"<br>Escenario: CA-1 Cierre exitoso de gestión con cumplimiento de coherencia de fechas (Regla RN-12)<br>  # finalizar() · estado_gestion = 'Finalizado', asigna fecha_cierre y solicitud = 'SOLUCIONADO'<br>  Cuando Andrés ejecuta la acción finalizar sobre el id_gestion 12 con la fecha y hora actual ("2026-03-01 16:30:00")<br>  Entonces las restricciones chk_gestion_cierre y chk_gestion_fechas validan que fecha_cierre >= fecha_vinculacion<br>  Y el sistema actualiza el estado_gestion a "Finalizado"<br>  Y registra fecha_cierre = "2026-03-01 16:30:00"<br>  Y cambia el estado de la id_solicitud 105 a "SOLUCIONADO"<br>  Y muestra el mensaje "Gestión de la solicitud finalizada correctamente."<br>Escenario: CA-2 Rechazo por inconsistencia temporal en fecha de cierre (Regla RN-12)<br>  # Restricción chk_gestion_fechas<br>  Cuando el sistema detecta que se intenta registrar una fecha_cierre anterior a fecha_vinculacion (ej: "2026-02-28")<br>  Entonces el sistema aborta la transacción por violar chk_gestion_fechas<br>  Y muestra el error "La fecha de cierre no puede ser anterior a la fecha de vinculación del gestor."<br>  Y la gestión se mantiene en estado "En_Proceso" |
+| **Origen de la necesidad** | Pregunta 18 del formulario, Regla RN-12 y método finalizar() de la clase gestion_solicitud. |
+| **RF derivados** | RF-35 |
+| **Prioridad** | Alta |
+
+---
+
+### Consultar registro de gestión
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-36 |
+| **Título corto** | Consultar registro de gestión |
+| **Historia** | Como Gerente, quiero consultar la información de un registro de gestión por su identificador, para revisar su asignación y tiempos. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que el Gerente "Álvaro Tamayo" ingresa al módulo de seguimiento de trámites<br>Escenario: CA-1 Consulta exitosa de ficha de gestión<br>  # consultar(id_gestion)<br>  Dado que existe el id_gestion 12 con prioridad "Alta", estado_gestion "Finalizado", fecha_vinculacion "2026-03-01 08:00:00" y fecha_cierre "2026-03-01 16:30:00"<br>  Cuando Álvaro consulta el registro con id_gestion 12<br>  Entonces el sistema despliega la información del registro:<br>    \| id_gestion \| 12 \|<br>    \| prioridad \| Alta \|<br>    \| estado_gestion \| Finalizado \|<br>    \| fecha_vinculacion \| 2026-03-01 08:00:00 \|<br>    \| fecha_cierre \| 2026-03-01 16:30:00 \|<br>Escenario: CA-2 Consulta de id_gestion inexistente<br>  Dado que no existe ningún registro con id_gestion 888<br>  Cuando Álvaro consulta el id_gestion 888<br>  Entonces el sistema emite el mensaje "No se encontraron registros de gestión asociadas al código 888." |
+| **Origen de la necesidad** | Pregunta 8 del formulario y método consultar(id_gestion) de la clase gestion_solicitud. |
+| **RF derivados** | RF-36 |
+| **Prioridad** | Media |
+
+---
+
+## Entidad evaluacion
+
+### Calificar servicio recibido
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-37 |
+| **Título corto** | Calificar servicio recibido |
+| **Historia** | Como Solicitante, quiero calificar de 1 a 5 la atención recibida e ingresar un comentario opcional, para evaluar el servicio prestado. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que la Solicitante "Marta Pérez" (id_usuario 10) ha iniciado sesión en la plataforma<br>  Y que la solicitud id_solicitud 105 de Marta finalizó su atención operativa con id_gestion 12 (estado_gestion = "Finalizado")<br>Escenario: CA-1 Evaluación exitosa por el solicitante (Reglas RN-07 y RN-13)<br>  # calificar(puntaje, comentario) en Evaluacion<br>  Dado que no existe ninguna evaluación previa para el id_gestion 12<br>  Cuando Marta asigna un puntaje de 5 y el comentario "Excelente atención y rapidez" para el id_gestion 12<br>  Entonces las reglas RN-07 (puntaje entre 1 y 5) y RN-13 (gestión finalizada) se validan como correctas<br>  Y el sistema registra la evaluación vinculada al id_gestion 12 con la fecha actual<br>  Y muestra el mensaje "Gracias por evaluar nuestro servicio."<br>Escenario: CA-2 Rechazo por intento de calificar una gestión NO finalizada (Regla RN-13)<br>  Dado que el id_gestion 14 se encuentra en estado_gestion = "En_Proceso"<br>  Cuando Marta intenta registrar una calificación para el id_gestion 14<br>  Entonces el sistema bloquea el registro por regla RN-13<br>  Y muestra la advertencia "No es posible evaluar la solicitud hasta que la gestión haya sido finalizada."<br>Escenario: CA-3 Rechazo por evaluación duplicada<br>  # Unicidad en id_gestion<br>  Dado que la gestión id_gestion 12 ya cuenta con una evaluación registrada<br>  Cuando Marta intenta enviar una segunda calificación para id_gestion 12<br>  Entonces el sistema rechaza la nueva evaluación<br>  Y muestra el mensaje "Ya se ha registrado una evaluación previa para este servicio."<br>Escenario: CA-4 Rechazo por puntaje fuera del rango permitido (Regla RN-07)<br>  Cuando Marta intenta enviar un puntaje de 6 o 0 para id_gestion 12<br>  Entonces la regla de validación RN-07 rechaza la transacción<br>  Y indica "El puntaje debe ser un número entero entre 1 y 5." |
+| **Origen de la necesidad** | Pregunta 19 del formulario, Reglas RN-07 y RN-13 y método calificar(puntaje, comentario) de la clase Evaluacion. |
+| **RF derivados** | RF-37 |
+| **Prioridad** | Media |
+
+---
+
+### Consultar evaluación de servicio
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-38 |
+| **Título corto** | Consultar evaluación de servicio |
+| **Historia** | Como Gerente General, quiero consultar una evaluación por su identificador, para analizar la satisfacción expresada por el usuario. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que el Gerente General "Álvaro Tamayo" ha iniciado sesión<br>Escenario: CA-1 Consulta exitosa de evaluación registrada<br>  # consultar(id_evaluacion)<br>  Dado que existe el id_evaluacion 40 con puntaje 5, comentario "Excelente atención", fecha "2026-03-02" y id_gestion 12<br>  Cuando Álvaro consulta la evaluación con id_evaluacion 40<br>  Entonces el sistema presenta el detalle:<br>    \| id_evaluacion \| 40 \|<br>    \| puntaje \| 5 estrellas \|<br>    \| comentario \| Excelente atención \|<br>    \| fecha \| 2026-03-02 \|<br>    \| id_gestion \| 12 \|<br>Escenario: CA-2 Búsqueda de evaluación inexistente<br>  Dado que no existe el id_evaluacion 999<br>  Cuando Álvaro busca el id_evaluacion 999<br>  Entonces el sistema notifica "No se encontró ningún registro de evaluación con el identificador 999." |
+| **Origen de la necesidad** | Pregunta 15 del formulario, Análisis de métricas y método consultar(id_evaluacion) de la clase Evaluacion. |
+| **RF derivados** | RF-38 |
+| **Prioridad** | Media |
+
+---
+
+## Entidad detalle_solicitud
+
+### Crear detalle o interacción en solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-39 |
+| **Título corto** | Crear detalle o interacción en solicitud |
+| **Historia** | Como Solicitante, quiero publicar un mensaje o adjuntar un archivo en el historial de la solicitud, para aportar información al expediente. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que el Gestor "Andrés Castro" ha iniciado sesión en la solicitud id_solicitud 105<br>Escenario: CA-1 Registro exitoso de mensaje con adjunto<br>  # crear() en detalle_solicitud · registra mensaje, ruta_adjunto y fecha_registro<br>  Cuando Andrés publica el mensaje "Se adjunta cotización del proveedor B" e incluye el archivo "/adjuntos/cotizacion_b.pdf"<br>  Entonces el sistema registra el detalle asociado al id_solicitud 105<br>  Y guarda la fecha y hora actual en fecha_registro<br>  Y muestra "Interacción agregada al expediente."<br>Escenario: CA-2 Registro exitoso de mensaje sin adjunto (o solo adjunto)<br>  Cuando Andrés publica un mensaje con contenido de texto pero sin archivo adjunto (ruta_adjunto = NULL)<br>  Entonces el sistema acepta y guarda la publicación correctamente<br>Escenario: CA-3 Rechazo por interacción totalmente vacía (Regla RN-08)<br>  # Restricción chk_detalle_contenido<br>  Cuando Andrés intenta publicar una interacción dejando el mensaje en blanco Y sin adjuntar ningún archivo<br>  Entonces la regla chk_detalle_contenido detiene el envío<br>  Y el sistema muestra el error "Debe ingresar al menos un mensaje de texto o un archivo adjunto para registrar la interacción." |
+| **Origen de la necesidad** | Pregunta 17 y 18 del formulario, Regla RN-08 y método crear() de la clase detalle_solicitud. |
+| **RF derivados** | RF-39 |
+| **Prioridad** | Alta |
+
+---
+
+### Consultar detalles de una solicitud
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-40 |
+| **Título corto** | Consultar detalles de una solicitud |
+| **Historia** | Como Solicitante, quiero consultar todos los mensajes y archivos adjuntos asociados a una solicitud por su identificador, para revisar el hilo conversacional. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que la Solicitante "Marta Pérez" ingresa a ver la bitácora conversacional de la id_solicitud 105<br>Escenario: CA-1 Consulta cronológica de interacciones existentes<br>  # consultarPorSolicitud(id_solicitud)<br>  Dado que la id_solicitud 105 tiene 2 interacciones registradas el "2026-03-01 09:00:00" y el "2026-03-01 10:15:00"<br>  Cuando Marta consulta los detalles de la id_solicitud 105<br>  Entonces el sistema despliega el listado de interacciones ordenado cronológicamente (de la más antigua a la más reciente):<br>    \| Fecha / Hora \| Usuario \| Mensaje \| Adjunto \|<br>    \| 2026-03-01 09:00:00 \| Marta Pérez \| Adjunto solicitud original \| /adjuntos/solicitud.pdf \|<br>    \| 2026-03-01 10:15:00 \| Andrés Castro \| Se adjunta cotización del proveedor B \| /adjuntos/cotizacion_b.pdf \|<br>Escenario: CA-2 Consulta de solicitud sin interacciones registradas<br>  Dado que la id_solicitud 109 es de reciente radicación y no posee notas ni adjuntos<br>  Cuando Marta consulta los detalles de la id_solicitud 109<br>  Entonces el sistema retorna una lista vacía<br>  Y presenta la leyenda "No existen mensajes o adjuntos adicionales para esta solicitud." |
+| **Origen de la necesidad** | Pregunta 21 del formulario y método consultarPorSolicitud(id_solicitud) de la clase detalle_solicitud. |
+| **RF derivados** | RF-40 |
+| **Prioridad** | Alta |
+
+---
+
+## Entidad bitacora_auditoria
+
+### Registrar acción de auditoría
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-41 |
+| **Título corto** | Registrar acción de auditoría |
+| **Historia** | Como Gerente, quiero registrar automáticamente cada evento relevante de la aplicación en la bitácora, para garantizar la trazabilidad inalterable. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que el sistema ejecuta operaciones transaccionales sobre la base de datos<br>Escenario: CA-1 Registro exitoso de evento de cambio de estado (Regla RN-15)<br>  # registrarAccion(accion) · requiere obligatoriamente estado_nuevo si la acción es 'Cambio_Estado'<br>  Cuando se ejecuta el evento 'Cambio_Estado' sobre la entidad "Solicitud" con id_registro 105<br>  Entonces el sistema exige e inserta en Bitacora_Auditoria el campo estado_nuevo = "APROBADA"<br>  Y registra la entidad, el ID afectado, el usuario responsable y la marca de tiempo<br>Escenario: CA-2 Garantía de inalterabilidad y no eliminación de la bitácora (Regla RN-09)<br>  # Disparadores trg_bitacora_no_update y trg_bitacora_no_delete<br>  Dado que existen 500 registros almacenados en Bitacora_Auditoria<br>  Cuando un usuario o script intenta ejecutar sentencias UPDATE o DELETE sobre la tabla Bitacora_Auditoria<br>  Entonces los disparadores trg_bitacora_no_update y trg_bitacora_no_delete bloquean la sentencia<br>  Y la base de datos emite la excepción "Operación prohibida: La bitácora de auditoría es de solo lectura e inalterable (RN-09)." |
+| **Origen de la necesidad** | Pregunta 4 del formulario, Reglas RN-09 y RN-15 y método registrarAccion(acción: accionAuditoria) de la clase Bitacora_Auditoria. |
+| **RF derivados** | RF-41 |
+| **Prioridad** | Alta |
+
+---
+
+### Consultar auditoría por entidad y registro
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-42 |
+| **Título corto** | Consultar auditoría por entidad y registro |
+| **Historia** | Como Gerente, quiero consultar las trazas de auditoría filtradas por entidad e ID de registro, para auditar el historial de una entidad específica. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que el Auditor "Carlos Restrepo" con privilegios de seguridad ha iniciado sesión<br>Escenario: CA-1 Consulta trazable por entidad e ID con soporte de índice<br>  # consultarPorEntidad(entidad, id_registro) · uso del índice idx_bitacora_entidad_registro<br>  Cuando Carlos consulta la bitácora filtrando por entidad = "Solicitud" e id_registro = 105<br>  Entonces el sistema utiliza el índice idx_bitacora_entidad_registro y retorna la lista cronológica de eventos de esa solicitud:<br>    \| Fecha / Hora \| Usuario \| Accion \| Estado Nuevo \|<br>    \| 2026-03-01 08:00:00 \| Marta Pérez \| Creacion \| BORRADOR \|<br>    \| 2026-03-01 08:30:00 \| Marta Pérez \| Radicacion \| PENDIENTE \|<br>    \| 2026-03-01 14:00:00 \| Rebeca López \| Aprobacion \| APROBADA \|<br>Escenario: CA-2 Denegación de acceso a usuarios sin rol Gerente o Auditor<br>  Dado que el usuario "Marta Pérez" (rol Solicitante) intenta consultar la función consultarPorEntidad<br>  Cuando Marta intenta ejecutar la consulta de auditoría<br>  entonces el sistema restringe el acceso<br>  y emite la alerta "Acceso denegado: Solo el personal de Gerencia o Auditoría puede consultar la bitácora."<br>Criterio de Rechazo: Si se produce un fallo de conexión con la base de datos o un error crítico de escritura al intentar almacenar el evento de auditoría, el sistema debe registrar el incidente en el archivo de logs del servidor y rechazar o bloquear preventivamente la transacción principal asociada para garantizar que no existan acciones del sistema sin trazabilidad. |
+| **Origen de la necesidad** | Pregunta 15 del formulario y método consultarPorEntidad(entidad, id_registro) de la clase Bitacora_Auditoria. |
+| **RF derivados** | RF-42 |
+| **Prioridad** | Alta |
+
+---
+
+### Consultar auditoría por rango de fechas
+| Campo | Contenido |
+| :--- | :--- |
+| **Código** | HU-43 |
+| **Título corto** | Consultar auditoría por rango de fechas |
+| **Historia** | Como Gerente, quiero consultar las trazas de auditoría ocurridas dentro de un rango de fechas, para supervisar las operaciones del sistema en un periodo. |
+| **Criterios de aceptación** | Antecedentes:<br>  Dado que el Gerente "Álvaro Tamayo" ha iniciado sesión en la plataforma<br>Escenario: CA-1 Consulta exitosa por rango de fechas válido<br>  # consultarPorRango(desde, hasta)<br>  Cuando Álvaro ejecuta la consulta de auditoría especificando fecha 'desde' = "2026-03-01 00:00:00" y fecha 'hasta' = "2026-03-01 23:59:59"<br>  Entonces el sistema genera el reporte con todas las trazas de auditoría ocurridas dentro de ese rango de tiempo<br>Escenario: CA-2 Rechazo por rango de fechas invertido o inconsistente<br>  Cuando Álvaro ingresa una fecha 'desde' ("2026-03-05") que es posterior a la fecha 'hasta' ("2026-03-01")<br>  Entonces el sistema invalida el rango enviado<br>  Y muestra el mensaje de error "La fecha inicial ('desde') no puede ser posterior a la fecha final ('hasta')."<br>  Y no ejecuta la consulta en la base de datos |
+| **Origen de la necesidad** | Pregunta 15 del formulario y método consultarPorRango(desde, hasta) de la clase Bitacora_Auditoria. |
+| **RF derivados** | RF-43 |
+| **Prioridad** | Alta |
