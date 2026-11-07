@@ -279,3 +279,159 @@ CREATE INDEX idx_bitacora_accion           ON bitacora_auditoria (accion_realiza
 CREATE INDEX idx_bitacora_est_ant          ON bitacora_auditoria (estado_anterior);
 CREATE INDEX idx_bitacora_est_nuev         ON bitacora_auditoria (estado_nuevo);
 CREATE INDEX idx_bitacora_fecha            ON bitacora_auditoria (fecha_registro);
+
+## TRIGGERS
+
+DELIMITER $$
+
+-- 2.1 RN-14 · CU-24 (DE-CU24, T24-1) -------------------------------------------------
+-- Inserción: la fecha de radicación no puede ser posterior al instante actual.
+CREATE TRIGGER trg_solicitud_fecha_radicacion
+BEFORE INSERT ON solicitud FOR EACH ROW
+BEGIN
+  IF NEW.fecha_radicacion > NOW() THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'RN-14: La fecha de radicación no puede ser posterior al instante actual.';
+  END IF;
+END$$
+
+-- Actualización: una vez radicada (estado distinto de BORRADOR) la fecha es inalterable.
+-- radicar() la fija en la transición BORRADOR → PENDIENTE (DS-01 m.18).
+CREATE TRIGGER trg_solicitud_fecha_inalterable
+BEFORE UPDATE ON solicitud FOR EACH ROW
+BEGIN
+  IF NEW.fecha_radicacion <> OLD.fecha_radicacion
+     AND (SELECT codigo_estado FROM estado_solicitud
+           WHERE id_estado_solicitud = OLD.id_estado_solicitud) <> 'BORRADOR' THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'RN-14: La fecha de radicación es inalterable una vez radicada la solicitud.';
+  END IF;
+  IF NEW.fecha_radicacion > NOW() THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'RN-14: La fecha de radicación no puede ser posterior al instante actual.';
+  END IF;
+END$$
+
+-- 2.2 RN-05 · CU-27 flujo 3a · HU-28 CA-2 (DS-02A m.15–19, DE-CU27 T27-4) ---------------
+-- El aprobador no puede ser el solicitante y debe tener rol Aprobador o Gerente (diccionario).
+CREATE TRIGGER trg_validar_aprobador
+BEFORE INSERT ON aprobacion_solicitud FOR EACH ROW
+BEGIN
+  IF NEW.id_aprobador = (SELECT id_solicitante FROM solicitud WHERE id_solicitud = NEW.id_solicitud) THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Conflicto de interés: El aprobador no puede ser el mismo usuario solicitante.';
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM usuario_rol ur JOIN rol r ON r.id_rol = ur.id_rol
+                  WHERE ur.id_usuario = NEW.id_aprobador AND r.nombre_rol IN ('Aprobador','Gerente')) THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'RN-05: El aprobador debe poseer rol Aprobador o Gerente.';
+  END IF;
+END$$
+
+CREATE TRIGGER trg_validar_aprobador_upd
+BEFORE UPDATE ON aprobacion_solicitud FOR EACH ROW
+BEGIN
+  IF NEW.id_aprobador = (SELECT id_solicitante FROM solicitud WHERE id_solicitud = NEW.id_solicitud) THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Conflicto de interés: El aprobador no puede ser el mismo usuario solicitante.';
+  END IF;
+END$$
+
+-- 2.3 RN-27 · CU-33 (DS-03 m.17–21, DE-CU33 T33-2) -------------------------------------
+-- El gestor debe tener el rol Gestion_Personal y la cuenta activa (precondición CU-33).
+CREATE TRIGGER trg_validar_gestor
+BEFORE INSERT ON gestion_solicitud FOR EACH ROW
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM usuario_rol ur
+                   JOIN rol r     ON r.id_rol = ur.id_rol
+                   JOIN usuario u ON u.id_usuario = ur.id_usuario
+                  WHERE ur.id_usuario = NEW.id_gestor
+                    AND r.nombre_rol = 'Gestion_Personal'
+                    AND u.estado_cuenta = 'activo') THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Rechaza el gestor: no tiene el rol Gestion_Personal activo.';
+  END IF;
+END$$
+
+CREATE TRIGGER trg_validar_gestor_upd
+BEFORE UPDATE ON gestion_solicitud FOR EACH ROW
+BEGIN
+  IF NEW.id_gestor <> OLD.id_gestor AND NOT EXISTS (
+       SELECT 1 FROM usuario_rol ur
+         JOIN rol r     ON r.id_rol = ur.id_rol
+         JOIN usuario u ON u.id_usuario = ur.id_usuario
+        WHERE ur.id_usuario = NEW.id_gestor
+          AND r.nombre_rol = 'Gestion_Personal'
+          AND u.estado_cuenta = 'activo') THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Rechaza el gestor: no tiene el rol Gestion_Personal activo.';
+  END IF;
+  -- RN-11 también en actualización: no reactivar una segunda gestión En_Proceso
+  IF NEW.estado_gestion = 'En_Proceso' AND OLD.estado_gestion <> 'En_Proceso' AND EXISTS (
+       SELECT 1 FROM gestion_solicitud g
+        WHERE g.id_solicitud = NEW.id_solicitud AND g.estado_gestion = 'En_Proceso'
+          AND g.id_gestion <> NEW.id_gestion) THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Error: La solicitud ya posee una gestión activa en proceso.';
+  END IF;
+END$$
+
+-- 2.4 RN-11 · CU-33 flujo 3a · HU-32 CA-2 (DS-03 m.22–25, DE-CU33 T33-3) ----------------
+-- MySQL no admite índices únicos parciales: una sola gestión En_Proceso por solicitud.
+CREATE TRIGGER trg_gestion_unica_activa
+BEFORE INSERT ON gestion_solicitud FOR EACH ROW
+BEGIN
+  IF NEW.estado_gestion = 'En_Proceso' AND EXISTS (
+       SELECT 1 FROM gestion_solicitud g
+        WHERE g.id_solicitud = NEW.id_solicitud AND g.estado_gestion = 'En_Proceso') THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Error: La solicitud ya posee una gestión activa en proceso.';
+  END IF;
+END$$
+-- Nota: con dos disparadores BEFORE INSERT, MySQL los ejecuta en orden de creación:
+-- primero trg_validar_gestor (RN-27) y luego trg_gestion_unica_activa (RN-11),
+-- el mismo orden del diagrama de actividades del CU-33 y de DS-03.
+
+-- 2.5 RN-13 · HU-37 (gestión Finalizado y evaluador = solicitante) ---------------------
+CREATE TRIGGER trg_validar_evaluacion
+BEFORE INSERT ON evaluacion FOR EACH ROW
+BEGIN
+  IF (SELECT estado_gestion FROM gestion_solicitud WHERE id_gestion = NEW.id_gestion) <> 'Finalizado' THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'RN-13: Solo se evalúa una gestión en estado Finalizado.';
+  END IF;
+  IF NEW.id_evaluador <> (SELECT s.id_solicitante FROM gestion_solicitud g
+                            JOIN solicitud s ON s.id_solicitud = g.id_solicitud
+                           WHERE g.id_gestion = NEW.id_gestion) THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'RN-13: Solo el solicitante del radicado puede evaluar el servicio.';
+  END IF;
+END$$
+
+-- 2.6 RN-15 · todos los CU críticos (paso de cambio de estado + bitácora) -------------
+-- Equivale a chk_bitacora_cambio_estado del diccionario (ver nota en 1.11).
+CREATE TRIGGER trg_bitacora_cambio_estado
+BEFORE INSERT ON bitacora_auditoria FOR EACH ROW
+BEGIN
+  IF NEW.accion_realizada = 'Cambio_Estado' AND NEW.estado_nuevo IS NULL THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'RN-15: Un Cambio_Estado exige registrar el estado nuevo.';
+  END IF;
+END$$
+
+-- 2.7 RN-09 · HU-41 CA-2 · RNF-03: la bitácora es de solo lectura e inmutable ----------
+CREATE TRIGGER trg_bitacora_no_update
+BEFORE UPDATE ON bitacora_auditoria FOR EACH ROW
+BEGIN
+  SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'RN-09: La bitácora de auditoría es inalterable; no admite modificaciones.';
+END$$
+
+CREATE TRIGGER trg_bitacora_no_delete
+BEFORE DELETE ON bitacora_auditoria FOR EACH ROW
+BEGIN
+  SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'RN-09: La bitácora de auditoría es inalterable; no admite eliminaciones.';
+END$$
+
+DELIMITER ;
